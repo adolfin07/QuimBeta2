@@ -5,10 +5,10 @@
 
       <!-- Contenido principal -->
       <div class="info-container">
-        <h2 *ngIf="sucursalActiva">{{ sucursalActiva?.nombre }}</h2>
-        <p *ngIf="sucursalActiva">{{ sucursalActiva?.direccion }}</p>
+        <h2 *ngIf="sucursalActiva">{{ sucursalActiva.nombre }}</h2>
+        <p *ngIf="sucursalActiva">{{ sucursalActiva.direccion }}</p>
         <p *ngIf="sucursalActiva">
-          <i class="fa-solid fa-phone"></i>{{ sucursalActiva?.telefono }}
+          <i class="fa-solid fa-phone"></i>{{ sucursalActiva.telefono }}
         </p>
       </div>
 

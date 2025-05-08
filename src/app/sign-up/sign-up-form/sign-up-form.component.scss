@@ -34,7 +34,6 @@ form {
     align-self: flex-start;
     margin-left: 5%;
     font-weight: bold;
-    
   }
 
   input {
@@ -43,24 +42,23 @@ form {
     outline: none;
     color: var(--black);
     border-radius: 20px;
-    padding: 4px 15px;
+    padding: 7px 15px;
     font-size: 12px;
-    height: 40px;
+    
     width: 100%;
   }
 
   #register {
-    margin-top: 15%;
+    margin-top: 5%;
     background-color: var(--white);
     color: var(--black);
     width: 50%;
-    height: 40px;
     border-radius: 20px;
+    padding: 7px 2px;
   }
 
-  #alreadyLogin{
+  #alreadyLogin {
     margin: 3% 0;
     background-color: transparent;
   }
 }
-

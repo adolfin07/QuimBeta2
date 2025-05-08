@@ -20,6 +20,7 @@
 
     .info-container {
       height: 50%;
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -36,6 +37,7 @@
         text-align: center;
         color: rgba(245, 245, 245, 0.76);
         font-size: 12px;
+        width: 100%;
         i {
           margin-right: 2%;
         }
