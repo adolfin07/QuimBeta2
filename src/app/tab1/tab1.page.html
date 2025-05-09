@@ -1,17 +1,27 @@
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" scrollY="false">
   <div class="container">
     <div class="container__top">
       <app-header-products></app-header-products>
     </div>
 
+    <!-- Barra de búsqueda -->
+    <div class="search-bar">
+      <ion-searchbar 
+        [(ngModel)]="searchQuery" 
+        (ionInput)="filterProducts()" 
+        debounce="500" 
+        placeholder="Buscar productos..."
+      ></ion-searchbar>
+    </div>
+
     <div class="container__products">
       <div class="content__container">
-        <div class="section">
+        <div class="section" *ngIf="filteredRow1Products.length > 0">
           <div class="section-title"><p>Carne</p></div>
 
           <div class="product-row">
             <div
-              *ngFor="let product of row1Products"
+              *ngFor="let product of filteredRow1Products"
               class="product-card"
               (click)="selectProduct(product)"
             >
@@ -25,12 +35,12 @@
           </div>
         </div>
 
-        <div class="section">
+        <div class="section" *ngIf="filteredRow2Products.length > 0">
           <div class="section-title"><p>Cosechables</p></div>
 
           <div class="product-row">
             <div
-              *ngFor="let product of row2Products"
+              *ngFor="let product of filteredRow2Products"
               class="product-card"
               (click)="selectProduct(product)"
             >
@@ -44,12 +54,12 @@
           </div>
         </div>
 
-        <div class="section">
+        <div class="section" *ngIf="filteredRow3Products.length > 0">
           <div class="section-title"><p>Extras</p></div>
 
           <div class="product-row">
             <div
-              *ngFor="let product of row3Products"
+              *ngFor="let product of filteredRow3Products"
               class="product-card"
               (click)="selectProduct(product)"
             >
@@ -64,7 +74,6 @@
         </div>
       </div>
     </div>
-
     <div class="product-template" *ngIf="selectedProduct">
       <div class="template-card">
         <div class="template__header">
@@ -96,31 +105,19 @@
 
         <div class="template__info">
           <h3 class="product__name">{{ selectedProduct.name }}</h3>
-          <p>{{selectedProduct.description}}</p>
+          <p>{{ selectedProduct.description }}</p>
         </div>
 
         <div class="template__bottom">
-          <div
-            class="presentaciones"
-            *ngIf="selectedProduct.presentations?.length >= 3"
-          >
+          <div class="presentaciones" *ngIf="selectedProduct.presentations?.length >= 3">
             <div class="presentacion1" (click)="changeImage(0)">
-              <img
-                [src]="selectedProduct.presentations[0]"
-                alt="Presentación 1"
-              />
+              <img [src]="selectedProduct.presentations[0]" alt="Presentación 1" />
             </div>
             <div class="presentacion2" (click)="changeImage(1)">
-              <img
-                [src]="selectedProduct.presentations[1]"
-                alt="Presentación 2"
-              />
+              <img [src]="selectedProduct.presentations[1]" alt="Presentación 2" />
             </div>
             <div class="presentacion3" (click)="changeImage(2)">
-              <img
-                [src]="selectedProduct.presentations[2]"
-                alt="Presentación 3"
-              />
+              <img [src]="selectedProduct.presentations[2]" alt="Presentación 3" />
             </div>
           </div>
 
