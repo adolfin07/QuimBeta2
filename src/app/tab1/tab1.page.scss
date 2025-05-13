@@ -1,5 +1,10 @@
 .container {
-  background-color: var(--light-red);
+  background-image: repeating-radial-gradient(
+      circle at 0 0,
+      transparent 0,
+      var(--dark-red) 30px
+    ),
+    repeating-linear-gradient(var(--light-red), var(--dark-red));
   height: 100%;
   width: 100%;
   .container__top {
@@ -11,24 +16,28 @@
   }
 
   .container__products {
-    height: 70%;
+    height: 65%;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-bottom: 10px;
+
     .content__container {
       width: 100%;
       height: 100%;
       padding-right: 15px;
       max-width: 750px;
+      overflow-y: scroll;
+
       .section {
-        height: 28%;
+        height: 30%;
 
         .section-title {
           padding-left: 20px;
           p {
             background-color: var(--white);
             text-align: center;
-            width: 120px;
+            width: 140px;
             padding: 2px 0;
             color: var(--black);
             margin-bottom: 0;
@@ -81,7 +90,7 @@
           color: #333;
           background: white;
           padding: 3px 1px;
-          width: 85px;
+          width: 95px;
         }
 
         .product-row {
