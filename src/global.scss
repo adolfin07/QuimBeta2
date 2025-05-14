@@ -57,3 +57,7 @@ ion-searchbar {
 ion-searchbar input {
   border-radius: 50px !important;
 }
+
+ion-content {
+  padding-top: env(safe-area-inset-top) !important;
+}

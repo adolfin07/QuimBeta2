@@ -46,7 +46,7 @@
     align-items: center;
     justify-content: center;
 
-    .user-span {
+    .user-label {
       color: var(--white);
       font-weight: 600;
       font-size: 22px;
@@ -89,7 +89,7 @@
         width: 14px;
         background-color: red;
       }
-      p {
+      label {
         font-size: 12px;
         color: var(--white);
       }
