@@ -6,8 +6,8 @@
       <!-- Contenido principal -->
       <div class="info-container">
         <h2 *ngIf="sucursalActiva">{{ sucursalActiva.nombre }}</h2>
-        <p *ngIf="sucursalActiva">{{ sucursalActiva.direccion }}</p>
-        <p *ngIf="sucursalActiva">
+        <p class="address" *ngIf="sucursalActiva">{{ sucursalActiva.direccion }}</p>
+        <p class="phone" *ngIf="sucursalActiva">
           <i class="fa-solid fa-phone"></i>{{ sucursalActiva.telefono }}
         </p>
       </div>
@@ -30,13 +30,21 @@
       </div>
     </div>
 
+    <!-- Contenedor de Mapa -->
     <div class="map-container">
       <iframe
         [src]="getMapaUrl(sucursalActiva)"
         frameborder="0"
         allowfullscreen
-      >
-      </iframe>
+      ></iframe>
     </div>
+
+    <!-- Botón para abrir Google Maps -->
+    <button
+      id="visitBtn"
+      (click)="openGoogleMaps(sucursalActiva.lat, sucursalActiva.lng)"
+    >
+      Visitar Ahora
+    </button>
   </div>
 </ion-content>

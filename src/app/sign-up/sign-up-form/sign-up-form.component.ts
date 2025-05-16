@@ -12,5 +12,9 @@ export class SignUpFormComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  register() {
+    this.router.navigate(['../../tabs/tab1']);
+  }
+
   ngOnInit() {}
 }

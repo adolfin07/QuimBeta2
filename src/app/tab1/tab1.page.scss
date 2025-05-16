@@ -7,6 +7,8 @@
     repeating-linear-gradient(var(--light-red), var(--dark-red));
   height: 100%;
   width: 100%;
+  padding-top: 5%;
+
   .container__top {
     width: 100%;
     height: 30%;
@@ -50,6 +52,7 @@
           overflow-x: auto;
           gap: 20px;
           padding: 5px;
+          margin-top: 8px;
         }
 
         .product-card {
@@ -228,12 +231,13 @@
       div {
         width: 50px;
         height: 50px;
-        box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.144);
+        box-shadow: 2px 2px 2px 2px rgba(255, 1, 1, 0.144);
         padding: 2px;
         border-radius: 5px;
         display: flex;
         align-items: center;
         justify-content: center;
+
         img {
           width: 20px;
           height: 20px;
@@ -408,4 +412,100 @@
   outline: none;
   padding: 0 8px;
   width: 2.8em;
+}
+
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fade-slide-in {
+  animation: fadeSlideIn 0.25s ease-out;
+}
+
+.product-template {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.template-card {
+  background: #fff;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+  width: 90%;
+  height: 90%;
+  overflow: hidden;
+  max-width: 600px;
+}
+
+.template__bottom {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+  background-color: #f4f4f4;
+
+  .presentaciones {
+    display: flex;
+    gap: 10px;
+
+    .presentacion {
+      cursor: pointer;
+      transition: transform 0.2s;
+      border: 1px solid transparent;
+      border-radius: 5px;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+
+      &.active {
+        border-color: var(--light-red);
+        transform: scale(1.1);
+      }
+
+      img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 5px;
+      }
+    }
+  }
+
+  .fichaTecnica,
+  .hojaSeguridad {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    color: var(--light-red);
+
+    i {
+      font-size: 20px;
+    }
+
+    p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    &:hover {
+      color: #0056b3;
+    }
+  }
 }

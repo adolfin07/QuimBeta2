@@ -66,7 +66,7 @@ export class Tab1Page implements OnInit {
       ],
     },
     {
-      section: 'populares3',
+      section: 'Herbicida',
       image:
         'https://mazorca.mx/wp-content/uploads/2021/11/la-mazorca-bayer-DEFENSA.jpg',
       name: 'Defensa NF',
@@ -79,6 +79,7 @@ export class Tab1Page implements OnInit {
       ],
     },
     {
+      section: 'Herbicida',
       image:
         'https://torke.com.mx/cdn/shop/files/Herbicida-Agricola-Harness-1-Litro.jpg?v=1689437720',
       name: 'Harness',
@@ -86,6 +87,7 @@ export class Tab1Page implements OnInit {
       IngredientesActivos: 'acetoclor',
     },
     {
+      section: 'Herbicida',
       image:
         'https://mazorca.mx/wp-content/uploads/2021/11/la-mazorca-syngenta-HARNESS-XTRA.jpg',
       name: 'Harness Xtra',
@@ -93,6 +95,7 @@ export class Tab1Page implements OnInit {
       IngredientesActivos: 'acetoclor atrazina',
     },
     {
+      section: 'Herbicida',
       image:
         'https://mazorca.mx/wp-content/uploads/2021/11/la-mazorca-bayer-LAUDIS.jpg',
       name: 'Laudis',
@@ -182,7 +185,7 @@ export class Tab1Page implements OnInit {
       section: 'Semilla de Maíz',
       image:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjSbM4mcBPuuuBd_z-ZfmskjM_AgkOdt4wtQ&s',
-      name: 'fDK-501SC',
+      name: 'DK-501SC',
       description: '60,000 SEMILLAS',
     },
   ];
@@ -241,6 +244,7 @@ export class Tab1Page implements OnInit {
   http: any;
   product: any;
   products: any;
+  selectedImage: any;
 
   constructor() {}
 
@@ -349,12 +353,32 @@ export class Tab1Page implements OnInit {
   closeProduct() {
     this.selectedProduct = null;
     this.currentImage = '';
+
+    // Espera a que termine la animación de salida antes de ocultar el template
+    setTimeout(() => {
+      this.selectedProduct = null;
+    }, 400); // Duración de la animación de salida
   }
 
   changeImage(index: number): void {
     const presentations = this.selectedProduct?.presentations;
     if (presentations && presentations.length > index) {
       this.currentImage = presentations[index];
+      this.activeIndex = index;
+      this.selectedImage = this.selectedProduct.presentations[index];
+      this.activeIndex = index;
+      this.selectedImage = this.selectedProduct.presentations[index];
+    }
+  }
+
+  activeIndex: number = 0;
+
+  openFile(fileType: string) {
+    const fileUrl = this.selectedProduct[fileType];
+    if (fileUrl) {
+      window.open(fileUrl, '_blank');
+    } else {
+      console.error(`Archivo no disponible: ${fileType}`);
     }
   }
 }

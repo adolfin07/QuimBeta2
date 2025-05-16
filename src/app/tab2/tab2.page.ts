@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Browser } from '@capacitor/browser';
 
-// Definición de la interfaz fuera de la clase
 export interface Sucursal {
   id: number;
   nombre: string;
@@ -19,7 +19,6 @@ export interface Sucursal {
   standalone: false,
 })
 export class Tab2Page {
-  // Lista de sucursales
   sucursales: Sucursal[] = [
     {
       id: 1,
@@ -78,16 +77,21 @@ export class Tab2Page {
     },
   ];
 
+  // sucursal activa
   sucursalActiva: Sucursal = this.sucursales[0];
-
   constructor(private sanitizer: DomSanitizer) {}
-
-  // Cambiar sucursal al hacer clic en los botones
+  async openGoogleMaps(lat: number, lng: number) {
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+    try {
+      await Browser.open({ url });
+    } catch (error) {
+      console.error('Error al abrir Google Maps:', error);
+    }
+  }
   cambiarSucursal(direccion: number) {
     const currentIndex = this.sucursales.indexOf(this.sucursalActiva);
     let newIndex = currentIndex + direccion;
 
-    // Controlar los límites del carrusel
     if (newIndex < 0) {
       newIndex = this.sucursales.length - 1;
     } else if (newIndex >= this.sucursales.length) {
@@ -96,8 +100,6 @@ export class Tab2Page {
 
     this.sucursalActiva = this.sucursales[newIndex];
   }
-
-  // Generar el URL del mapa de Google para la sucursal activa
   getMapaUrl(sucursal: Sucursal): SafeResourceUrl {
     const url = `https://www.google.com/maps?q=${sucursal.lat},${sucursal.lng}&hl=es&z=16&output=embed`;
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);

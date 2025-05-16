@@ -5,8 +5,9 @@ const config: CapacitorConfig = {
   appName: 'Quimagro',
   webDir: 'www',
   server: {
-    cleartext: true         // Solo necesario si usas imágenes desde http:// (no https://)
-  }
+    cleartext: true,
+    allowNavigation: ['https://www.google.com/*'], // Solo necesario si usas imágenes desde http:// (no https://)
+  },
 };
 
 export default config;

@@ -38,9 +38,14 @@
         color: rgba(245, 245, 245, 0.76);
         font-size: 12px;
         width: 100%;
-        i {
-          margin-right: 2%;
-        }
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+      }
+
+      .phone {
+        font-weight: bold;
       }
     }
 
@@ -89,5 +94,18 @@
       width: 100%;
       height: 100%;
     }
+  }
+
+  #visitBtn {
+    position: absolute;
+    width: 32%;
+    height: 27px;
+    left: 50%;
+    bottom: 3%;
+    transform: translate(-50%, -50%);
+    background: var(--light-red);
+    border-radius: 10px;
+    z-index: 9999999999999;
+    transition: all 300ms ease-in;
   }
 }
