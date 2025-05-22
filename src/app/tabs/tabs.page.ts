@@ -7,8 +7,7 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class TabsPage {
-selectedTab: any;
+  selectedTab: any;
 
   constructor() {}
-
 }

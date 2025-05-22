@@ -19,8 +19,8 @@ export class HeaderProductsComponent implements AfterViewInit {
       direction: 'horizontal',
       loop: true,
       autoplay: {
-        delay: 3000, // Cambia de slide cada 3 segundos
-        disableOnInteraction: false, // No se detiene al interactuar
+        delay: 3000,
+        disableOnInteraction: false, 
       },
       pagination: {
         el: '.swiper-pagination',

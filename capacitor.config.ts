@@ -6,7 +6,14 @@ const config: CapacitorConfig = {
   webDir: 'www',
   server: {
     cleartext: true,
-    allowNavigation: ['https://www.google.com/*'], // Solo necesario si usas imágenes desde http:// (no https://)
+    allowNavigation: ['https://www.google.com/*'],
+  },
+  plugins: {
+    Keyboard: {
+      resize: 'body',
+      style: 'dark',
+      resizeOnFullScreen: true,
+    },
   },
 };
 

@@ -153,7 +153,7 @@
       <div class="template-card">
         <div class="template__header">
           <div class="template__header-top">
-            <button (click)="closeProduct()">
+            <button class="closeProductTemplate" (click)="closeProduct()">
               <i class="fa-solid fa-arrow-left-long"></i>
             </button>
             <p>{{ selectedProduct?.section }}</p>
@@ -198,21 +198,32 @@
             </div>
           </div>
 
-          <div class="fichaTecnica" (click)="openFile('fichaTecnica')">
+          <div
+            *ngIf="selectedProduct?.FichaTecnica"
+            class="fichaTecnica"
+            (click)="openFile(selectedProduct.FichaTecnica)"
+          >
             <div>
-              <i class="fa-solid fa-file-pdf"></i>
+              <div class="">
+                <i class="fa-solid fa-file-pdf"></i>
+              </div>
               <p>Ficha Técnica</p>
             </div>
           </div>
 
-          <div class="hojaSeguridad" (click)="openFile('hojaSeguridad')">
+          <div
+            *ngIf="selectedProduct?.HojaSeguridad"
+            class="hojaSeguridad"
+            (click)="openFile(selectedProduct.HojaSeguridad)"
+          >
             <div>
-              <i class="fa-solid fa-file-pdf"></i>
+              <div class="">
+                <i class="fa-solid fa-file-pdf"></i>
+              </div>
               <p>Hoja de Seguridad</p>
             </div>
           </div>
         </div>
-        f
       </div>
     </div>
   </div>

@@ -77,7 +77,7 @@ export class Tab2Page {
     },
   ];
 
-  // sucursal activa
+  //sucursalactiva
   sucursalActiva: Sucursal = this.sucursales[0];
   constructor(private sanitizer: DomSanitizer) {}
   async openGoogleMaps(lat: number, lng: number) {

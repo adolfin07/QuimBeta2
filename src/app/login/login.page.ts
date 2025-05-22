@@ -18,7 +18,7 @@ password: any;
 
   onKeyUp(event: KeyboardEvent) {
     if (event.key === 'Enter') {
-      this.login(); // Si presionan Enter, se llama a la función de login
+      this.login(); 
     }
   }
 }

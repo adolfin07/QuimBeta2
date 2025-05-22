@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Keyboard } from '@capacitor/keyboard';
 
 @Component({
   selector: 'app-form',
@@ -23,5 +24,15 @@ export class FormComponent {
     }
   }
 
-  
+  ngOnInit() {
+    // Escuchar la apertura del teclado
+    Keyboard.addListener('keyboardWillShow', (info) => {
+      document.body.style.paddingBottom = `${info.keyboardHeight}px`;
+    });
+
+    // Escuchar el cierre del teclado
+    Keyboard.addListener('keyboardWillHide', () => {
+      document.body.style.paddingBottom = '0px';
+    });
+  }
 }
