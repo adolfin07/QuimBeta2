@@ -14,7 +14,7 @@
       ></ion-searchbar>
     </div>
     <div class="container__products">
-      <div class="content__container">
+      <div #scrollContainer class="content__container">
         <div class="section" *ngIf="filteredRow1Products.length > 0">
           <div class="section-title"><p>Faena</p></div>
 
@@ -147,8 +147,24 @@
             </div>
           </div>
         </div>
+
+        <i
+          id="whatsappBtn"
+          class="fa-brands fa-whatsapp"
+          (click)="abrirWhatsApp()"
+        ></i>
+      </div>
+      <div *ngIf="noProductsFound" class="noResults">
+        <ion-text color="medium">
+          <p>
+            El producto que estás buscando no está disponible.<br />
+            Consulta directamente en sucursal.
+          </p>
+          <i class="fa-solid fa-shop-slash"></i>
+        </ion-text>
       </div>
     </div>
+
     <div class="product-template fade-slide-in" *ngIf="selectedProduct">
       <div class="template-card">
         <div class="template__header">
@@ -184,29 +200,27 @@
         </div>
 
         <div class="template__bottom">
-          <div
-            class="presentaciones"
-            *ngIf="selectedProduct.presentations?.length"
-          >
+          <div class="presentaciones">
             <div
+              *ngFor="let pres of selectedProduct?.presentations; let i = index"
               class="presentacion"
-              *ngFor="let presentation of selectedProduct.presentations; let i = index"
+              [class.active]="i === activeIndex"
               (click)="changeImage(i)"
-              [ngClass]="{ 'active': i === activeIndex }"
             >
-              <img [src]="presentation" [alt]="'Presentación ' + (i + 1)" />
+              <img
+                [src]="typeof pres === 'string' ? pres : pres.image"
+                alt="Presentación {{ i + 1 }}"
+              />
             </div>
           </div>
 
           <div
             *ngIf="selectedProduct?.FichaTecnica"
             class="fichaTecnica"
-            (click)="openFile(selectedProduct.FichaTecnica)"
+            (click)="openFileByType('fichaTecnica')"
           >
             <div>
-              <div class="">
-                <i class="fa-solid fa-file-pdf"></i>
-              </div>
+              <div><i class="fa-solid fa-file-pdf"></i></div>
               <p>Ficha Técnica</p>
             </div>
           </div>
@@ -214,12 +228,10 @@
           <div
             *ngIf="selectedProduct?.HojaSeguridad"
             class="hojaSeguridad"
-            (click)="openFile(selectedProduct.HojaSeguridad)"
+            (click)="openFileByType('hojaSeguridad')"
           >
             <div>
-              <div class="">
-                <i class="fa-solid fa-file-pdf"></i>
-              </div>
+              <div><i class="fa-solid fa-file-pdf"></i></div>
               <p>Hoja de Seguridad</p>
             </div>
           </div>

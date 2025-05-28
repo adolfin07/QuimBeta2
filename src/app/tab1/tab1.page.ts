@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Platform } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
@@ -246,6 +246,7 @@ export class Tab1Page implements OnInit {
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzYoLq_-JLSFoIxwGHPUNBSbllUg4ZAJhpyw&s',
       name: 'DKS-3607',
       description: 'Cantidad: 20KG',
+      FichaTecnica: '/assets/pdfs/FichaTecnica/DKS-3607.pdf',
     },
     {
       section: 'Semilla de Sorgo',
@@ -277,10 +278,15 @@ export class Tab1Page implements OnInit {
 
   selectedProduct: any = null;
   currentImage: string = '';
-  product: any;
-  products: any;
-  selectedImage: any;
-  productoActual: any;
+  productoActual: any = null;
+
+  activeIndex: number = 0;
+  isClosing = false;
+
+  noProductsFound: boolean = false;
+
+  @ViewChild('scrollContainer', { read: ElementRef })
+  scrollContainer?: ElementRef;
 
   constructor(
     private platform: Platform,
@@ -296,125 +302,112 @@ export class Tab1Page implements OnInit {
   }
 
   filterProducts() {
-    const normalizedQuery = this.removeAccents(this.searchQuery.toLowerCase());
-
-    this.filteredRow1Products = this.row1Products.filter(
-      (product) =>
-        this.removeAccents(product.name.toLowerCase()).includes(
-          normalizedQuery
-        ) ||
-        this.removeAccents(product.section?.toLowerCase() || '').includes(
-          normalizedQuery
-        ) ||
-        this.removeAccents(product.IngredientesActivos.toLowerCase()).includes(
-          normalizedQuery
-        )
+    const normalizedQuery = this.removeAccents(
+      this.searchQuery.toLowerCase().trim()
     );
 
-    this.filteredRow2Products = this.row2Products.filter(
-      (product) =>
-        this.removeAccents(product.name.toLowerCase()).includes(
-          normalizedQuery
-        ) ||
-        this.removeAccents(product.section?.toLowerCase() || '').includes(
-          normalizedQuery
-        ) ||
-        this.removeAccents(product.IngredientesActivos.toLowerCase()).includes(
-          normalizedQuery
-        )
-    );
+    if (!normalizedQuery) {
+      this.filteredRow1Products = [...this.row1Products];
+      this.filteredRow2Products = [...this.row2Products];
+      this.filteredRow3Products = [...this.row3Products];
+      this.filteredRow4Products = [...this.row4Products];
+      this.filteredRow5Products = [...this.row5Products];
+      this.filteredRow6Products = [...this.row6Products];
+      this.filteredRow7Products = [...this.row7Products];
+      this.noProductsFound = false;
+      return;
+    }
 
-    this.filteredRow3Products = this.row3Products.filter(
-      (product) =>
-        this.removeAccents(product.name.toLowerCase()).includes(
-          normalizedQuery
-        ) ||
-        this.removeAccents(product.section?.toLowerCase() || '').includes(
-          normalizedQuery
-        ) ||
-        this.removeAccents(product.IngredientesActivos.toLowerCase()).includes(
-          normalizedQuery
-        )
-    );
+    const filterRow = (rowProducts: any[]) => {
+      return rowProducts.filter(
+        (product) =>
+          this.removeAccents(product.name.toLowerCase()).includes(
+            normalizedQuery
+          ) ||
+          this.removeAccents(product.section?.toLowerCase() || '').includes(
+            normalizedQuery
+          ) ||
+          this.removeAccents(
+            product.IngredientesActivos?.toLowerCase() || ''
+          ).includes(normalizedQuery)
+      );
+    };
 
-    this.filteredRow4Products = this.row4Products.filter(
-      (product) =>
-        this.removeAccents(product.name.toLowerCase()).includes(
-          normalizedQuery
-        ) ||
-        this.removeAccents(product.section?.toLowerCase() || '').includes(
-          normalizedQuery
-        ) ||
-        this.removeAccents(product.IngredientesActivos.toLowerCase()).includes(
-          normalizedQuery
-        )
-    );
+    this.filteredRow1Products = filterRow(this.row1Products);
+    this.filteredRow2Products = filterRow(this.row2Products);
+    this.filteredRow3Products = filterRow(this.row3Products);
+    this.filteredRow4Products = filterRow(this.row4Products);
+    this.filteredRow5Products = filterRow(this.row5Products);
 
-    this.filteredRow5Products = this.row5Products.filter(
-      (product) =>
-        this.removeAccents(product.name.toLowerCase()).includes(
-          normalizedQuery
-        ) ||
-        this.removeAccents(product.section?.toLowerCase() || '').includes(
-          normalizedQuery
-        ) ||
-        this.removeAccents(product.IngredientesActivos.toLowerCase()).includes(
-          normalizedQuery
-        )
-    );
+    const filterRowNoIngred = (rowProducts: any[]) => {
+      return rowProducts.filter(
+        (product) =>
+          this.removeAccents(product.name.toLowerCase()).includes(
+            normalizedQuery
+          ) ||
+          this.removeAccents(product.section?.toLowerCase() || '').includes(
+            normalizedQuery
+          )
+      );
+    };
 
-    this.filteredRow6Products = this.row6Products.filter(
-      (product) =>
-        this.removeAccents(product.name.toLowerCase()).includes(
-          normalizedQuery
-        ) ||
-        this.removeAccents(product.section?.toLowerCase() || '').includes(
-          normalizedQuery
-        )
-    );
+    this.filteredRow6Products = filterRowNoIngred(this.row6Products);
+    this.filteredRow7Products = filterRowNoIngred(this.row7Products);
 
-    this.filteredRow7Products = this.row7Products.filter(
-      (product) =>
-        this.removeAccents(product.name.toLowerCase()).includes(
-          normalizedQuery
-        ) ||
-        this.removeAccents(product.section?.toLowerCase() || '').includes(
-          normalizedQuery
-        )
-    );
+    // Actualizar flag para mostrar mensaje de "no resultados"
+    this.noProductsFound =
+      this.filteredRow1Products.length === 0 &&
+      this.filteredRow2Products.length === 0 &&
+      this.filteredRow3Products.length === 0 &&
+      this.filteredRow4Products.length === 0 &&
+      this.filteredRow5Products.length === 0 &&
+      this.filteredRow6Products.length === 0 &&
+      this.filteredRow7Products.length === 0;
   }
 
   selectProduct(product: any) {
     if (product) {
       this.selectedProduct = product;
-      this.currentImage = product.image;
+      this.productoActual = product;
+      this.resetPresentations();
     }
   }
 
-  isClosing = false;
-
-  closeProduct() {
-    this.isClosing = true;
-
-    setTimeout(() => {
-      this.selectedProduct = null;
-      this.isClosing = false;
-    }, 300); // Duración de tu animación
+  resetPresentations() {
+    if (this.selectedProduct?.presentations?.length > 0) {
+      this.activeIndex = 0;
+      this.currentImage = this.selectedProduct.presentations[0];
+    } else {
+      this.activeIndex = -1;
+      this.currentImage = this.selectedProduct?.image || '';
+    }
   }
 
   changeImage(index: number): void {
-    const presentations = this.selectedProduct?.presentations;
-    if (presentations && presentations.length > index) {
-      this.currentImage = presentations[index];
-      this.activeIndex = index;
-      this.selectedImage = this.selectedProduct.presentations[index];
-      this.activeIndex = index;
-      this.selectedImage = this.selectedProduct.presentations[index];
-    }
+    if (!this.selectedProduct?.presentations) return;
+    if (index < 0 || index >= this.selectedProduct.presentations.length) return;
+
+    this.activeIndex = index;
+    this.currentImage = this.selectedProduct.presentations[index];
   }
-  activeIndex: number = 0;
+
+  closeProduct() {
+    this.isClosing = true;
+    setTimeout(() => {
+      this.selectedProduct = null;
+      this.productoActual = null;
+      this.activeIndex = -1;
+      this.currentImage = '';
+      this.isClosing = false;
+    }, 300);
+  }
 
   openFileByType(tipo: 'fichaTecnica' | 'hojaSeguridad') {
+    if (!this.productoActual) {
+      console.error('No hay producto seleccionado');
+      return;
+    }
+
     let url = '';
 
     switch (tipo) {
@@ -462,8 +455,21 @@ export class Tab1Page implements OnInit {
         }
       );
     } else {
-      // Web fallback (abre en nueva pestaña)
       window.open(fileUrl, '_blank');
     }
+  }
+
+  ionViewWillEnter() {
+    if (this.scrollContainer?.nativeElement) {
+      this.scrollContainer.nativeElement.scrollTop = 0;
+    }
+  }
+
+  abrirWhatsApp() {
+    const numero = '6682531211'; // O usa this.sucursalActiva.telefono
+    const mensaje = 'Hola, me gustaría más información';
+    const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+
+    window.open(url, '_blank');
   }
 }

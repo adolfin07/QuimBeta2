@@ -46,6 +46,10 @@
 
       .phone {
         font-weight: bold;
+        a {
+          text-decoration: none;
+          color: var(--white );
+        }
       }
     }
 
