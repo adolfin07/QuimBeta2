@@ -148,11 +148,13 @@
           </div>
         </div>
 
-        <i
-          id="whatsappBtn"
-          class="fa-brands fa-whatsapp"
-          (click)="abrirWhatsApp()"
-        ></i>
+        <div class="whatsappDiv">
+          <i
+            id="whatsappBtn"
+            class="fa-brands fa-whatsapp"
+            (click)="abrirWhatsApp()"
+          ></i>
+        </div>
       </div>
       <div *ngIf="noProductsFound" class="noResults">
         <ion-text color="medium">

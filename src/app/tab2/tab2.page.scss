@@ -49,6 +49,7 @@
         a {
           text-decoration: none;
           color: var(--white );
+          font-size: 13px;
         }
       }
     }
@@ -102,8 +103,8 @@
 
   #visitBtn {
     position: absolute;
-    width: 32%;
-    height: 27px;
+    width: 37%;
+    height: 29px;
     left: 50%;
     bottom: 3%;
     transform: translate(-50%, -50%);
