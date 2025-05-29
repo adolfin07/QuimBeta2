@@ -18,7 +18,8 @@ export class Tab1Page implements OnInit {
       image:
         'https://boxagro.com/web/image/product.template/11996/image_1024?unique=e678d8c',
       name: 'Faena Fuerte',
-      description: 'Ingrediente Activo: CLIFOSATO',
+      description:
+        'Faena Fuerte es un herbicida sistémico no selectivo formulado con una concentración más alta de glifosato para un control rápido y efectivo de malezas anuales y perennes. Se aplica directamente sobre el follaje, desde donde se traslada a las raíces, eliminando completamente las plantas no deseadas.',
       IngredientesActivos: 'clifosato',
       presentations: [
         'https://boxagro.com/web/image/product.template/11996/image_1024?unique=e678d8c',
@@ -33,7 +34,8 @@ export class Tab1Page implements OnInit {
       image:
         'https://palhogarshop.com.mx/cdn/shop/files/D_NQ_NP_648093-MLM75989572725_042024-O.webp?v=1729271879',
       name: 'Faena Clásico',
-      description: 'Ingrediente Activo: CLIFOSATO',
+      description:
+        'Faena Clásico es un herbicida sistémico no selectivo con glifosato, usado para controlar malezas en cultivos como frutales, maíz, sorgo y algodón tolerante a este herbicida. Se aplica sobre el follaje y se traslada a las raíces, causando la muerte de la planta en pocos días. Se recomienda usar con cuidado para evitar daños en cultivos deseados.',
       IngredientesActivos: 'clifosato',
       presentations: [
         'https://palhogarshop.com.mx/cdn/shop/files/D_NQ_NP_648093-MLM75989572725_042024-O.webp?v=1729271879',
@@ -51,7 +53,8 @@ export class Tab1Page implements OnInit {
       image:
         'https://mazorca.mx/wp-content/uploads/2021/11/la-mazorca-bayer-CONSIST-MAX.jpg',
       name: 'Consist Max',
-      description: 'Ingrediente Activo: TEBUCONAZOLE + TRIFLOXYSTROBIN',
+      description:
+        'Consist Max es un herbicida sistémico formulado para el control eficaz de malezas difíciles en cultivos agrícolas. Contiene glifosato en alta concentración y se aplica sobre el follaje de las plantas, desde donde se traslada a las raíces para eliminar completamente las malezas. ',
       IngredientesActivos: 'Tebuconazole trifloxystrobin',
       presentations: [
         'https://mazorca.mx/wp-content/uploads/2021/11/la-mazorca-bayer-CONSIST-MAX.jpg',
@@ -67,7 +70,8 @@ export class Tab1Page implements OnInit {
       image:
         'https://mazorca.mx/wp-content/uploads/2021/11/la-mazorca-bayer-DEFENSA.jpg',
       name: 'Defensa',
-      description: 'Ingrediente Activo: PICLORAM + 2,4-D',
+      description:
+        'Defensa es un herbicida sistémico no selectivo formulado para el control efectivo de malezas en diversos cultivos. Contiene glifosato como ingrediente activo, que se absorbe por el follaje y se traslada hasta las raíces, eliminando completamente las plantas indeseadas.4-D',
       IngredientesActivos: 'picloram 2,4-d',
       presentations: [
         'https://mazorca.mx/wp-content/uploads/2021/11/la-mazorca-bayer-DEFENSA.jpg',
@@ -82,7 +86,8 @@ export class Tab1Page implements OnInit {
       image:
         'https://mazorca.mx/wp-content/uploads/2021/11/la-mazorca-bayer-DEFENSA.jpg',
       name: 'Defensa NF',
-      description: 'Ingrediente Activo: AMINOPYRALID + 2,4-D',
+      description:
+        'Defensa NF es un herbicida sistémico selectivo que combina picloram y 2,4-D para el control efectivo de malezas de hoja ancha, arbustivas y leñosas en pastizales y potreros, sin dañar los pastos establecidos. Se aplica de forma foliar y ayuda a mantener la calidad del pasto, mejorando la disponibilidad de forraje para el ganado.',
       IngredientesActivos: 'aminopyralid 2,4-d',
       presentations: [
         'https://mazorca.mx/wp-content/uploads/2021/11/la-mazorca-bayer-DEFENSA.jpg',
@@ -97,7 +102,8 @@ export class Tab1Page implements OnInit {
       image:
         'https://torke.com.mx/cdn/shop/files/Herbicida-Agricola-Harness-1-Litro.jpg?v=1689437720',
       name: 'Harness',
-      description: 'Ingrediente Activo: ACETOCLOR',
+      description:
+        'Este producto actúa inhibiendo la germinación de las semillas de malezas al ser absorbido por las raíces en proceso de germinación. Es especialmente efectivo en suelos con humedad, ya que requiere de esta condición para activarse adecuadamente.f',
       IngredientesActivos: 'acetoclor',
       FichaTecnica: '/assets/pdfs/FichaTecnica/Harness.pdf',
       HojaSeguridad: '/assets/pdfs/HojaSeguridad/Harness.pdf',
@@ -107,7 +113,8 @@ export class Tab1Page implements OnInit {
       image:
         'https://mazorca.mx/wp-content/uploads/2021/11/la-mazorca-syngenta-HARNESS-XTRA.jpg',
       name: 'Harness Xtra',
-      description: 'Ingrediente Activo: ACETOCLOR + ATRAZINA',
+      description:
+        'Harness® Xtra es un herbicida preemergente selectivo desarrollado por Bayer para el control de malezas en cultivos de maíz. Su formulación combina dos ingredientes activos: acetoclor (46.3%) y atrazina (18.4%), lo que le permite ofrecer un amplio espectro de control sobre malezas de hoja angosta y ancha, como zacate pitillo, zacate pinto, zacate salado, zacate cola de zorra, quelite, enredadera, gigantón, flor amarilla y hierba del pollo .',
       IngredientesActivos: 'acetoclor atrazina',
       FichaTecnica: '/assets/pdfs/FichaTecnica/HarnessXtra.pdf',
       HojaSeguridad: '/assets/pdfs/HojaSeguridad/HarnessXtra.pdf',
@@ -130,7 +137,8 @@ export class Tab1Page implements OnInit {
       image:
         'https://http2.mlstatic.com/D_NQ_NP_745110-MLM51137055120_082022-O-clavis-1-litro-control-de-gusano-cogollero-4-hectareas.webp',
       name: 'Clavis',
-      description: 'Ingrediente Activo: TIODICARB + TRIFLUMURÓN',
+      description:
+        'Clavis® es un insecticida desarrollado por Bayer, diseñado específicamente para el control del gusano cogollero (Spodoptera frugiperda) en cultivos de maíz y sorgo. Su formulación combina dos ingredientes activos: tiodicarb (30%) y triflumurón (10%), que actúan de manera sinérgica para ofrecer un control eficaz de esta plaga.te Activo: TIODICARB + TRIFLUMURÓN',
       IngredientesActivos: 'tiodicarb triflumuron',
       FichaTecnica: '/assets/pdfs/FichaTecnica/Clavis.pdf',
       HojaSeguridad: '/assets/pdfs/HojaSeguridad/Clavis.pdf',
@@ -140,7 +148,8 @@ export class Tab1Page implements OnInit {
       image:
         'https://torke.com.mx/cdn/shop/files/Decis-Forte-Uso-Agricola-450-Ml-Deltametrina-Plaga-Gusano.jpg?v=1689275238',
       name: 'Decis Forte',
-      description: 'Ingrediente Activo: DELTAMETRINA',
+      description:
+        'Decis® Forte es un insecticida piretroide formulado con deltametrina al 10% (100 g/L), desarrollado por Bayer para el control efectivo de diversas plagas en cultivos agrícolas. Actúa por contacto e ingestión sobre el sistema nervioso de los insectos, mostrando alta eficacia a dosis bajas y un rápido efecto de volteo.',
       IngredientesActivos: 'deltametrina',
       FichaTecnica: '/assets/pdfs/FichaTecnica/DecisForte.pdf',
       HojaSeguridad: '/assets/pdfs/HojaSeguridad/DecisForte.pdf',
@@ -149,7 +158,8 @@ export class Tab1Page implements OnInit {
       section: 'Insecticida',
       image: 'https://imaisa.com.mx/wp-content/uploads/2020/04/BAYAG-005.jpg',
       name: 'Muralla Max',
-      description: 'Ingrediente Activo: IMIDACLOPRID + BETACYFLUTRIN',
+      description:
+        'Muralla Max® es un insecticida de Bayer formulado con imidacloprid (19.6%) y betacyfluthrin (8.4%), presentando una formulación OD (dispersión en aceite) que combina un neonicotinoide y un piretroide sintético. Esta combinación permite un control rápido y prolongado de diversas plagas en una amplia gama de cultivos',
       IngredientesActivos: 'imidacloprid betacyflutrin',
       FichaTecnica: '/assets/pdfs/FichaTecnica/MurallaMax.pdf',
       HojaSeguridad: '/assets/pdfs/HojaSeguridad/MurallaMax.pdf',
@@ -162,7 +172,8 @@ export class Tab1Page implements OnInit {
       image:
         'https://www.comercialagropecuaria.mx/cdn/shop/products/Bayfolan_Forte.png?v=1565981358',
       name: 'Bayfolan Forte',
-      description: 'Ingrediente Activo: N,P,K + MICROELEMENTOS',
+      description:
+        'Los fertilizantes foliares son soluciones líquidas aplicadas directamente sobre las hojas de las plantas para proporcionar nutrientes esenciales de forma rápida y eficiente. Esta técnica de nutrición complementa la fertilización convencional al suelo, permitiendo una absorción casi inmediata por parte de la planta .',
       IngredientesActivos: 'n,p,k microelementos',
       presentations: [
         'https://www.comercialagropecuaria.mx/cdn/shop/products/Bayfolan_Forte.png?v=1565981358',
