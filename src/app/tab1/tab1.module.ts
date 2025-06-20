@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -12,7 +12,8 @@ import { HeaderProductsModule } from './header-products/header-products.module';
 import { File } from '@awesome-cordova-plugins/file/ngx';
 import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
 import { HttpClientModule } from '@angular/common/http';
-
+import { QuimagroAboutComponent } from './quimagro-about/quimagro-about.component';
+import { QuimagroServicesComponent } from './quimagro-services/quimagro-services.component';
 
 @NgModule({
   imports: [
@@ -21,9 +22,13 @@ import { HttpClientModule } from '@angular/common/http';
     IonicModule,
     Tab1PageRoutingModule,
     HeaderProductsModule,
-    HttpClientModule,  // <--- Aquí
+    HttpClientModule,
+    QuimagroAboutComponent,
+    QuimagroServicesComponent,
   ],
   declarations: [Tab1Page],
   providers: [File, FileOpener],
+  exports: [Tab1Page],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class Tab1PageModule {}

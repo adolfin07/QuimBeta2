@@ -10,7 +10,7 @@
   }
 
   .swiper-pagination-bullet-active {
-    background: var(--light-green) !important;
+    background: var(--light-red) !important;
   }
 }
 
@@ -21,4 +21,20 @@
   --light-green: #39bf5b;
   --black: #0d0d0d;
   --white: #fffdfe;
+}
+
+html,
+body,
+ion-app {
+  background-color: var(--light-red);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+i[_ngcontent-ng-c1062881376] {
+  color: #ff0000 !important;
+}
+tab-selected .icon {
+  color: var(--light-red) !important;
 }

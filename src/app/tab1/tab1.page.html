@@ -1,244 +1,244 @@
-<ion-content [fullscreen]="true" scrollY="false">
+<ion-content
+  class="principalMain"
+  [fullscreen]="true"
+  scrollY="hidde"
+  [scrollAssist]="false"
+  [keyboardResizes]="false"
+>
   <div class="container">
     <div class="container__top">
       <app-header-products></app-header-products>
     </div>
 
-    <!--ssearch-->
-    <div class="search-bar">
-      <ion-searchbar
-        [(ngModel)]="searchQuery"
-        (ionInput)="filterProducts()"
-        debounce="500"
-        placeholder="Buscar productos..."
-      ></ion-searchbar>
-    </div>
-    <div class="container__products">
-      <div #scrollContainer class="content__container">
-        <div class="section" *ngIf="filteredRow1Products.length > 0">
-          <div class="section-title"><p>Faena</p></div>
+    <ion-header>
+      <ion-toolbar>
+        <div class="custom-tabs">
+          <ion-button
+            fill="clear"
+            (click)="selectTab('productos')"
+            [color]="selectedTab === 'productos' ? 'danger' : 'medium'"
+          >
+            <img src="../../assets/LOGOS/icono1.png" alt="" loading="lazy" />
+          </ion-button>
+          <ion-button
+            fill="clear"
+            (click)="selectTab('buscar')"
+            [color]="selectedTab === 'buscar' ? 'danger' : 'medium'"
+          >
+            <img src="../../assets/LOGOS/icono2.png" alt="" loading="lazy" />
+          </ion-button>
+          <ion-button
+            fill="clear"
+            (click)="selectTab('categorias')"
+            [color]="selectedTab === 'categorias' ? 'danger' : 'medium'"
+          >
+            <img src="../../assets/LOGOS/icono3.png" alt="" loading="lazy" />
+          </ion-button>
+        </div>
+      </ion-toolbar>
+    </ion-header>
 
-          <div class="product-row">
+    <ion-content>
+      <!--productos page-->
+      <div class="products" *ngIf="selectedTab === 'productos'">
+        <ion-searchbar
+          placeholder="Buscar producto..."
+          (ionInput)="filtrarProductos($event)"
+        ></ion-searchbar>
+
+        <!-- RESULTADOS DE BÚSQUEDA -->
+        <div
+          class="search-results"
+          *ngIf="searchTerm && productosFiltrados.length > 0 && !subproductoSeleccionado && !productoSeleccionado"
+        >
+          <p class="title">Resultados de la búsqueda</p>
+
+          <div class="product-grid">
             <div
-              *ngFor="let product of filteredRow1Products"
-              class="product-card"
-              (click)="selectProduct(product)"
+              class="category"
+              *ngFor="let producto of productosFiltrados"
+              (click)="abrirProductoDesdeBusqueda(producto)"
             >
-              <div class="product-content">
-                <div class="product-image">
-                  <img [src]="product.image" alt="Producto" />
+              <div class="category-img">
+                <img
+                  [src]="producto.img"
+                  [alt]="producto.title"
+                  loading="lazy"
+                />
+              </div>
+              <p class="category-title">{{ producto.title }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!--categorias-->
+        <div
+          class="sections-container"
+          *ngIf="!searchTerm && !productoSeleccionado && !subproductoSeleccionado"
+        >
+          <div class="row" *ngFor="let categoria of categorias">
+            <p class="title">{{ categoria.nombre }}</p>
+            <div class="container-row">
+              <div
+                class="category"
+                *ngFor="let producto of categoria.productos"
+                (click)="abrirProductoDesdeCategoria(producto)"
+              >
+                <div class="category-img">
+                  <img
+                    [src]="producto.img"
+                    [alt]="producto.title"
+                    loading="lazy"
+                  />
                 </div>
-                <div class="product-name">{{ product.name }}</div>
+                <p class="category-title">{{ producto.title }}</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="section" *ngIf="filteredRow2Products.length > 0">
-          <div class="section-title"><p>Fungicida</p></div>
-
-          <div class="product-row">
+        <!--subproductos de categorias-->
+        <div
+          class="subproductos-container"
+          *ngIf="productoSeleccionado && !subproductoSeleccionado"
+        >
+          <button (click)="volverAtrasProducto()" class="back-button">
+            <i class="fa-solid fa-arrow-left"></i> Volver a categorías
+          </button>
+          <p class="title">{{ productoSeleccionado.title }}</p>
+          <div class="product-grid">
             <div
-              *ngFor="let product of filteredRow2Products"
-              class="product-card"
-              (click)="selectProduct(product)"
+              class="category"
+              *ngFor="let subproducto of productoSeleccionado.detalles"
+              (click)="abrirProductoDesdeBusqueda(subproducto)"
             >
-              <div class="product-content">
-                <div class="product-image">
-                  <img [src]="product.image" alt="Producto" />
-                </div>
-                <div class="product-name">{{ product.name }}</div>
+              <div class="category-img">
+                <img
+                  [src]="subproducto.img"
+                  [alt]="subproducto.title"
+                  loading="lazy"
+                />
               </div>
+              <p class="category-title">{{ subproducto.title }}</p>
             </div>
           </div>
         </div>
 
-        <div class="section" *ngIf="filteredRow3Products.length > 0">
-          <div class="section-title"><p>Herbicida</p></div>
-
-          <div class="product-row">
-            <div
-              *ngFor="let product of filteredRow3Products"
-              class="product-card"
-              (click)="selectProduct(product)"
-            >
-              <div class="product-content">
-                <div class="product-image">
-                  <img [src]="product.image" alt="Producto" />
-                </div>
-                <div class="product-name">{{ product.name }}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="section" *ngIf="filteredRow4Products.length > 0">
-          <div class="section-title"><p>Insecticida</p></div>
-
-          <div class="product-row">
-            <div
-              *ngFor="let product of filteredRow4Products"
-              class="product-card"
-              (click)="selectProduct(product)"
-            >
-              <div class="product-content">
-                <div class="product-image">
-                  <img [src]="product.image" alt="Producto" />
-                </div>
-                <div class="product-name">{{ product.name }}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="section" *ngIf="filteredRow5Products.length > 0">
-          <div class="section-title"><p>Foliares</p></div>
-
-          <div class="product-row">
-            <div
-              *ngFor="let product of filteredRow5Products"
-              class="product-card"
-              (click)="selectProduct(product)"
-            >
-              <div class="product-content">
-                <div class="product-image">
-                  <img [src]="product.image" alt="Producto" />
-                </div>
-                <div class="product-name">{{ product.name }}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="section" *ngIf="filteredRow6Products.length > 0">
-          <div class="section-title"><p>Semillas de Maíz</p></div>
-
-          <div class="product-row">
-            <div
-              *ngFor="let product of filteredRow6Products"
-              class="product-card"
-              (click)="selectProduct(product)"
-            >
-              <div class="product-content">
-                <div class="product-image">
-                  <img [src]="product.image" alt="Producto" />
-                </div>
-                <div class="product-name">{{ product.name }}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="section" *ngIf="filteredRow7Products.length > 0">
-          <div class="section-title"><p>Semilla de Sorgo</p></div>
-
-          <div class="product-row">
-            <div
-              *ngFor="let product of filteredRow7Products"
-              class="product-card"
-              (click)="selectProduct(product)"
-            >
-              <div class="product-content">
-                <div class="product-image">
-                  <img [src]="product.image" alt="Producto" />
-                </div>
-                <div class="product-name">{{ product.name }}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="whatsappDiv">
-          <i
-            id="whatsappBtn"
-            class="fa-brands fa-whatsapp"
-            (click)="abrirWhatsApp()"
-          ></i>
-        </div>
-      </div>
-      <div *ngIf="noProductsFound" class="noResults">
-        <ion-text color="medium">
-          <p>
-            El producto que estás buscando no está disponible.<br />
-            Consulta directamente en sucursal.
-          </p>
-          <i class="fa-solid fa-shop-slash"></i>
-        </ion-text>
-      </div>
-    </div>
-
-    <div class="product-template fade-slide-in" *ngIf="selectedProduct">
-      <div class="template-card">
-        <div class="template__header">
-          <div class="template__header-top">
-            <button class="closeProductTemplate" (click)="closeProduct()">
+        <!--template del producto info-->
+        <div
+          class="detalle-subproducto-fullscreen fade-slide-in"
+          *ngIf="subproductoSeleccionado"
+        >
+          <div class="detalle-header">
+            <button (click)="volverAtrasSubproducto()">
               <i class="fa-solid fa-arrow-left-long"></i>
             </button>
-            <p>{{ selectedProduct?.section }}</p>
+            <p class="title">{{ subproductoSeleccionado.title }}</p>
             <i class="fa-solid fa-bell"></i>
           </div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1440 400"
-            preserveAspectRatio="none"
-            style="width: 100%; height: 150px"
-          >
-            <path
-              fill="#f23838"
-              fill-opacity="1"
-              d="M0,0 C0,250 360,250 720,250 C1080,250 1440,400 1440,400 L1440,0 Z"
-            />
-          </svg>
-          <div class="template__header-bot">
-            <div class="img">
-              <img [src]="currentImage" alt="Imagen producto seleccionada" />
-            </div>
-          </div>
-        </div>
 
-        <div class="template__info">
-          <h3 class="product__name">{{ selectedProduct.name }}</h3>
-          <p>{{ selectedProduct.description }}</p>
-        </div>
-
-        <div class="template__bottom">
-          <div class="presentaciones">
-            <div
-              *ngFor="let pres of selectedProduct?.presentations; let i = index"
-              class="presentacion"
-              [class.active]="i === activeIndex"
-              (click)="changeImage(i)"
-            >
+          <div class="detalle-content">
+            <div class="detalle-content-top">
               <img
-                [src]="typeof pres === 'string' ? pres : pres.image"
-                alt="Presentación {{ i + 1 }}"
+                [src]="imagenPresentacionActiva"
+                [alt]="subproductoSeleccionado.title"
+                loading="lazy"
               />
             </div>
-          </div>
 
-          <div
-            *ngIf="selectedProduct?.FichaTecnica"
-            class="fichaTecnica"
-            (click)="openFileByType('fichaTecnica')"
-          >
-            <div>
-              <div><i class="fa-solid fa-file-pdf"></i></div>
-              <p>Ficha Técnica</p>
+            <div class="detalle-content-info">
+              <p class="productTitle">
+                {{ subproductoSeleccionado.productTitle }}
+              </p>
+              <p class="description">
+                {{ subproductoSeleccionado.description }}
+              </p>
+              <p class="ventajas">
+                <span>Ventajas</span> {{ subproductoSeleccionado.ventajas }}
+              </p>
             </div>
-          </div>
 
-          <div
-            *ngIf="selectedProduct?.HojaSeguridad"
-            class="hojaSeguridad"
-            (click)="openFileByType('hojaSeguridad')"
-          >
-            <div>
-              <div><i class="fa-solid fa-file-pdf"></i></div>
-              <p>Hoja de Seguridad</p>
+            <div class="detalle-content-bottom">
+              <div
+                class="presentaciones"
+                *ngIf="subproductoSeleccionado.presentations"
+              >
+                <p>Presentaciones</p>
+                <div class="presentaciones-row">
+                  <div
+                    *ngFor="let pres of subproductoSeleccionado.presentations; let i = index"
+                    class="presentacion"
+                    [class.active]="i === activeIndex"
+                    (click)="changeImage(i)"
+                  >
+                    <img
+                      [src]="typeof pres === 'string' ? pres : pres.img"
+                      alt="Presentación {{ i + 1 }}"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <p class="ingredienteActivo">
+                <span>Ingrediente Activo:</span>
+                {{ subproductoSeleccionado.ingredienteActivo }}
+              </p>
+
+              <div
+                class="descargables"
+                *ngIf="detalleSeleccionado && detalleSeleccionado.descargables"
+              >
+                <div>
+                  <button
+                    *ngIf="detalleSeleccionado.descargables.fichaTecnica"
+                    (click)="openFileByType('fichaTecnica')"
+                  >
+                    <i class="fa-solid fa-file-pdf"></i>
+                    Ver Ficha Técnica
+                  </button>
+                </div>
+                  <div>
+                  <button
+                    *ngIf="detalleSeleccionado.descargables.folleto"
+                    (click)="openFileByType('folleto')"
+                  >
+                    <i class="fa-solid fa-file-pdf"></i>
+                    Ver Folleto
+                  </button>
+                </div>
+                <div>
+                  <button
+                    *ngIf="detalleSeleccionado.descargables.hojaSeguridad"
+                    (click)="openFileByType('hojaSeguridad')"
+                  >
+                    <i class="fa-solid fa-file-pdf"></i>
+                    Ver Hoja de Seguridad
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+
+      <!--quimagro page-->
+      <div class="about" *ngIf="selectedTab === 'buscar'">
+        <app-quimagro-about />
+      </div>
+
+      <!--servicios page-->
+      <div *ngIf="selectedTab === 'categorias'">
+        <app-quimagro-services />
+      </div>
+
+      <div class="whatsapp-container">
+        <i
+          id="whatsappBtn"
+          class="fa-brands fa-whatsapp"
+          (click)="abrirWhatsApp()"
+        ></i>
+      </div>
+    </ion-content>
   </div>
 </ion-content>

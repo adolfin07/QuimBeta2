@@ -37,7 +37,7 @@
 /* Puedes poner esto en tu styles.scss o en el componente si usás encapsulación global */
 ion-tabs {
   ion-tab-button {
-    --color-selected: #ff0000;
+    --color-selected: #ff0000 !important;
     --color: #8e8e93;
 
     .icon {
@@ -45,7 +45,7 @@ ion-tabs {
     }
 
     &.tab-selected .icon {
-      color: var(--light-red);
+      color: var(--light-red) !important;
     }
   }
 }
@@ -58,6 +58,3 @@ ion-searchbar input {
   border-radius: 50px !important;
 }
 
-ion-content {
-  padding-top: env(safe-area-inset-top) !important;
-}

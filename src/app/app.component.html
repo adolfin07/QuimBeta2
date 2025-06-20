@@ -1,3 +1,8 @@
 <ion-app>
+  <div *ngIf="showSplash" class="splash-screen" [class.leave]="splashLeaving">
+    <img src="../assets/global-imgs/icono.png" class="imgLoader" alt="" />
+    <div class="loader"></div>
+  </div>
+
   <ion-router-outlet></ion-router-outlet>
 </ion-app>

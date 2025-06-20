@@ -1,421 +1,649 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Directory, Filesystem } from '@capacitor/filesystem';
-import { Platform } from '@ionic/angular';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { File } from '@awesome-cordova-plugins/file/ngx';
 import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
+import { IonicModule, Platform } from '@ionic/angular';
+import { Keyboard } from '@capacitor/keyboard';
+
+interface Producto {
+  id: string;
+  title: string;
+  img: string;
+  detalles: Producto[];
+  productTitle?: string;
+  description?: string;
+  ventajas?: string;
+  presentations?: string[];
+  ingredienteActivo?: string;
+  descargables?: {
+    fichaTecnica?: string;
+    hojaSeguridad?: string;
+    folleto?: string;
+  };
+}
+
+interface Categoria {
+  nombre: string;
+  productos: Producto[];
+}
 
 @Component({
   selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss'],
+  templateUrl: './tab1.page.html',
+  styleUrls: ['./tab1.page.scss'],
   standalone: false,
+  providers: [File, FileOpener],
 })
+
 export class Tab1Page implements OnInit {
-  row1Products = [
+  selectedTab: 'productos' | 'buscar' | 'categorias' = 'productos';
+
+  categorias: Categoria[] = [
     {
-      section: 'Faena',
-      image:
-        'https://boxagro.com/web/image/product.template/11996/image_1024?unique=e678d8c',
-      name: 'Faena Fuerte',
-      description:
-        'Faena Fuerte es un herbicida sistémico no selectivo formulado con una concentración más alta de glifosato para un control rápido y efectivo de malezas anuales y perennes. Se aplica directamente sobre el follaje, desde donde se traslada a las raíces, eliminando completamente las plantas no deseadas.',
-      IngredientesActivos: 'clifosato',
-      presentations: [
-        'https://boxagro.com/web/image/product.template/11996/image_1024?unique=e678d8c',
-        'https://imaisa.com.mx/wp-content/uploads/2020/06/MONSA-001.jpg',
-        'https://imaisa.com.mx/wp-content/uploads/2023/01/FAENA-10-LITROS-CON-MARCAEV.png',
+      nombre: 'Semillas',
+      productos: [
+        {
+          id: 'semilla-maiz',
+          title: 'Semilla De Maíz',
+          img: '../assets/QUIMAGROAPP/seedling-solid.svg',
+          detalles: [
+            {
+              id: 'DK-4050',
+              title: 'DK-4050',
+              img: '../assets/QUIMAGROAPP/LOGOS/DK-4050.png',
+              detalles: [],
+              productTitle: 'DK-4050',
+              description:
+                'FAENA FUERTE® con Transorb® es un herbicida sistémico que contiene una nueva fórmula, única en el mercado de México y el mundo, que POTENCIALIZA LA VELOCIDAD DE PENETRACIÓN gracias a la tecnología Transorb®',
+              ventajas:
+                'Brinda un mejor desempeño y establece un nuevo estándar de control de malezas',
+              presentations: [],
+              ingredienteActivo:
+                'Sal de potasio de N-(fosfonometil)-glicina; (sal de potasio de glifosato)',
+              descargables: {
+                fichaTecnica:
+                  'assets/QUIMAGROAPP/FICHAS/SEMILLAS/Ficha tecnica_DK-4050.pdf',
+                hojaSeguridad: 'assets/pdfs/HojaSeguridad/FaenaClasico.pdf',
+              },
+            },
+            {
+              id: 'DK-5021',
+              title: 'DK-5021',
+              img: '../assets/QUIMAGROAPP/LOGOS/DK-5021.png',
+              detalles: [],
+              productTitle: 'DK-5021',
+              description: 'Ideal para suelos secos y alta resistencia.',
+              ventajas: 'Germina rápido y tolera sequías.',
+              ingredienteActivo: 'N/A',
+              descargables: {
+                fichaTecnica:
+                  'assets/QUIMAGROAPP/FICHAS/SEMILLAS/Ficha tecnica_DK-5021.pdf',
+                hojaSeguridad: 'https://example.com/hojas/seguridad_dk2222.pdf',
+              },
+            },
+            {
+              id: 'DK-5024',
+              title: 'DK-5024',
+              img: '../assets/QUIMAGROAPP/LOGOS/DK-5024.png',
+              detalles: [],
+              productTitle: 'DK-5024',
+              description: 'Ideal para suelos secos y alta resistencia.',
+              ventajas: 'Germina rápido y tolera sequías.',
+              ingredienteActivo: 'N/A',
+              descargables: {
+                fichaTecnica:
+                  'assets/QUIMAGROAPP/FICHAS/SEMILLAS/Ficha tecnica_DK-5024.pdf',
+                hojaSeguridad: 'https://example.com/hojas/seguridad_dk2222.pdf',
+              },
+            },
+            {
+              id: 'DK-4055',
+              title: 'DK-4055',
+              img: '../assets/QUIMAGROAPP/LOGOS/DK-4055.png',
+              detalles: [],
+              productTitle: 'DK-4055',
+              description: 'Ideal para suelos secos y alta resistencia.',
+              ventajas: 'Germina rápido y tolera sequías.',
+              ingredienteActivo: 'N/A',
+              descargables: {
+                fichaTecnica:
+                  'assets/QUIMAGROAPP/FICHAS/SEMILLAS/Ficha tecnica_DK-4055.pdf',
+                hojaSeguridad: 'https://example.com/hojas/seguridad_dk2222.pdf',
+              },
+            },
+            {
+              id: 'DK-2048',
+              title: 'DK-2048',
+              img: '../assets/QUIMAGROAPP/LOGOS/DK-2048.png',
+              detalles: [],
+              productTitle: 'DK-2048',
+              description: 'Ideal para suelos secos y alta resistencia.',
+              ventajas: 'Germina rápido y tolera sequías.',
+              ingredienteActivo: 'N/A',
+              descargables: {
+                fichaTecnica:
+                  'assets/QUIMAGROAPP/FICHAS/SEMILLAS/Ficha tecnica_DK-2048.pdf',
+                hojaSeguridad: 'https://example.com/hojas/seguridad_dk2222.pdf',
+              },
+            },
+            {
+              id: 'PRECEON DK-501SC',
+              title: 'DK-501SC',
+              img: '../assets/QUIMAGROAPP/LOGOS/DKS-501.png',
+              detalles: [],
+              productTitle: 'PRECEON DK-501SC',
+              description: 'Ideal para suelos secos y alta resistencia.',
+              ventajas: 'Germina rápido y tolera sequías.',
+              ingredienteActivo: 'N/A',
+              descargables: {
+                fichaTecnica:
+                  'assets/QUIMAGROAPP/FICHAS/SEMILLAS/Ficha tecnica_DK-501.pdf',
+                hojaSeguridad: 'https://example.com/hojas/seguridad_dk2222.pdf',
+              },
+            },
+          ],
+        },
+        {
+          id: 'semilla-sorgo',
+          title: 'Semilla De Sorgo',
+          img: '../assets/QUIMAGROAPP/seedling-solid.svg',
+          detalles: [
+            {
+              id: 'DKS-40',
+              title: 'DKS-40',
+              img: '../assets/QUIMAGROAPP/LOGOS/DKS-40.png',
+              detalles: [],
+              productTitle: 'DKS-40',
+              description: 'Alta resistencia a plagas comunes.',
+              ventajas: 'Crecimiento rápido y alto rendimiento.',
+              presentations: [],
+              ingredienteActivo: 'N/A',
+              descargables: {
+                fichaTecnica:
+                  'assets/QUIMAGROAPP/FICHAS/SEMILLAS/Ficha tecnica_DKS-40.pdf',
+                hojaSeguridad: 'https://example.com/hojas/seguridad_sorgoA.pdf',
+              },
+            },
+            {
+              id: 'DKS-2805',
+              title: 'DKS-2805',
+              img: '../assets/QUIMAGROAPP/LOGOS/DKS-2805.png',
+              detalles: [],
+              productTitle: 'DKS-2805',
+              description: 'Alta resistencia a plagas comunes.',
+              ventajas: 'Crecimiento rápido y alto rendimiento.',
+              presentations: [],
+              ingredienteActivo: 'N/A',
+              descargables: {
+                fichaTecnica:
+                  'assets/QUIMAGROAPP/FICHAS/SEMILLAS/Ficha tecnica_DKS-2805.pdf',
+                hojaSeguridad: 'https://example.com/hojas/seguridad_sorgoA.pdf',
+              },
+            },
+            {
+              id: 'DKS-3607',
+              title: 'DKS-3607',
+              img: '../assets/QUIMAGROAPP/LOGOS/DKS-3607.png',
+              detalles: [],
+              productTitle: 'DKS-3607',
+              description: 'Alta resistencia a plagas comunes.',
+              ventajas: 'Crecimiento rápido y alto rendimiento.',
+              presentations: [],
+              ingredienteActivo: 'N/A',
+              descargables: {
+                fichaTecnica:
+                  'assets/QUIMAGROAPP/FICHAS/SEMILLAS/Ficha tecnica_DKS-3607.pdf',
+                hojaSeguridad: 'https://example.com/hojas/seguridad_sorgoA.pdf',
+              },
+            },
+            {
+              id: 'DKS-26',
+              title: 'DKS-26',
+              img: '../assets/QUIMAGROAPP/LOGOS/DKS-26.png',
+              detalles: [],
+              productTitle: 'DKS-26',
+              description: 'Alta resistencia a plagas comunes.',
+              ventajas: 'Crecimiento rápido y alto rendimiento.',
+              presentations: [],
+              ingredienteActivo: 'N/A',
+              descargables: {
+                fichaTecnica:
+                  'assets/QUIMAGROAPP/FICHAS/SEMILLAS/Ficha tecnica_DKS-26.pdf',
+                hojaSeguridad: 'https://example.com/hojas/seguridad_sorgoA.pdf',
+              },
+            },
+            {
+              id: 'DKS-820',
+              title: 'DKS-820',
+              img: '../assets/QUIMAGROAPP/LOGOS/DKS-820.png',
+              detalles: [],
+              productTitle: 'DKS-820',
+              description: 'Alta resistencia a plagas comunes.',
+              ventajas: 'Crecimiento rápido y alto rendimiento.',
+              presentations: [],
+              ingredienteActivo: 'N/A',
+              descargables: {
+                fichaTecnica:
+                  'assets/QUIMAGROAPP/FICHAS/SEMILLAS/Ficha tecnica_DKS-820.pdf',
+                hojaSeguridad: 'https://example.com/hojas/seguridad_sorgoA.pdf',
+              },
+            },
+          ],
+        },
       ],
-      FichaTecnica: '/assets/pdfs/FichaTecnica/FaenaFuerte.pdf',
-      HojaSeguridad: '/assets/pdfs/HojaSeguridad/FaenaFuerte.pdf',
     },
     {
-      section: 'Faena',
-      image:
-        'https://palhogarshop.com.mx/cdn/shop/files/D_NQ_NP_648093-MLM75989572725_042024-O.webp?v=1729271879',
-      name: 'Faena Clásico',
-      description:
-        'Faena Clásico es un herbicida sistémico no selectivo con glifosato, usado para controlar malezas en cultivos como frutales, maíz, sorgo y algodón tolerante a este herbicida. Se aplica sobre el follaje y se traslada a las raíces, causando la muerte de la planta en pocos días. Se recomienda usar con cuidado para evitar daños en cultivos deseados.',
-      IngredientesActivos: 'clifosato',
-      presentations: [
-        'https://palhogarshop.com.mx/cdn/shop/files/D_NQ_NP_648093-MLM75989572725_042024-O.webp?v=1729271879',
-        'https://ppq.mx/wp-content/uploads/2022/07/Faena-1Lto.jpg',
-        'https://imaisa.com.mx/wp-content/uploads/2020/06/MONSA-007.jpg',
+      nombre: 'Agroquimicos',
+      productos: [
+        {
+          id: 'Faena',
+          title: 'Faena',
+          img: '../assets/QUIMAGROAPP/faena.svg',
+          detalles: [
+            {
+              id: 'Faena Fuerte',
+              title: 'Faena Fuerte',
+              img: '../assets/QUIMAGROAPP/LOGOS/FAENAF.png',
+              detalles: [],
+              productTitle: 'Faena Fuerte',
+              description: 'Eliminación efectiva de malezas.',
+              ventajas: 'Uso seguro en cultivos de maíz.',
+              presentations: [
+                '../assets/QUIMAGROAPP/PRODUCTOS/FAENA FUERTE.png',
+                '../assets/QUIMAGROAPP/PRODUCTOS/Faena Fuerte Garrafa.png',
+              ],
+              ingredienteActivo: 'Glifosato',
+              descargables: {
+                fichaTecnica: 'assets/QUIMAGROAPP/FICHAS/Ficha ',
+                hojaSeguridad:
+                  'assets/QUIMAGROAPP/HOJA DE SEGURIDAD/Hoja de seguridad_Faena Fuerte.pdf ',
+              },
+            },
+            {
+              id: 'Faena Clásico',
+              title: 'Faena Clásico',
+              img: '../assets/QUIMAGROAPP/LOGOS/FAENA.png',
+              detalles: [],
+              productTitle: 'Faena Clásico',
+              description: 'Control selectivo de malezas difíciles.',
+              ventajas: 'Efectivo en pequeñas dosis.',
+              presentations: [
+                '../assets/QUIMAGROAPP/PRODUCTOS/FAENA CLASICO.png',
+                '../assets/QUIMAGROAPP/PRODUCTOS/Faena Clasico Garrafa.png',
+              ],
+              ingredienteActivo: 'Glifosato',
+              descargables: {
+                fichaTecnica: 'https://example.com/fichas/herbicidaB.pdf',
+                hojaSeguridad:
+                  'assets/QUIMAGROAPP/HOJA DE SEGURIDAD/Hoja de seguridad_Faena Clásico.pdf ',
+              },
+            },
+          ],
+        },
+        {
+          id: 'Fungicida',
+          title: 'Fungicida',
+          img: '../assets/QUIMAGROAPP/spray-can-solid.svg',
+          detalles: [
+            {
+              id: 'Consist Max',
+              title: 'Consist Max',
+              img: '../assets/QUIMAGROAPP/LOGOS/CONSISTM.png',
+              detalles: [],
+              productTitle: 'Consist Max',
+              description: 'Eliminación efectiva de malezas.',
+              ventajas: 'Uso seguro en cultivos de maíz.',
+              presentations: [
+                '../assets/QUIMAGROAPP/PRODUCTOS/Consist Max.png',
+              ],
+              ingredienteActivo: 'TEBUCONAZOLE TRIFLOXYSTROBIN',
+              descargables: {
+                fichaTecnica:
+                  'assets/QUIMAGROAPP/FICHAS/Ficha tecnica_Consist Max.pdf',
+                folleto: 'assets/QUIMAGROAPP/FOLLETOS/Folleto_Consist Max.pdf',
+                hojaSeguridad:
+                  'assets/QUIMAGROAPP/HOJA DE SEGURIDAD/Hoja de seguridad_Consist Max.pdf ',
+              },
+            },
+          ],
+        },
+        {
+          id: 'herbicidas',
+          title: 'Herbicidas',
+          img: '../assets/QUIMAGROAPP/leaf-solid.svg',
+          detalles: [
+            {
+              id: 'Defensa',
+              title: 'Defensa',
+              img: '../assets/QUIMAGROAPP/LOGOS/DEFENSA.png',
+              detalles: [],
+              productTitle: 'Defensa',
+              description: 'Eliminación efectiva de malezas.',
+              ventajas: 'Uso seguro en cultivos de maíz.',
+              ingredienteActivo: 'PLICORAM',
+              descargables: {
+                fichaTecnica:
+                  'assets/QUIMAGROAPP/FICHAS/Ficha tecnica_Defensa.pdf',
+                hojaSeguridad:
+                  'assets/QUIMAGROAPP/HOJA DE SEGURIDAD/Hoja de seguridad_.pdf ',
+              },
+            },
+            {
+              id: 'Defensa NF',
+              title: 'Defensa NF',
+              img: '../assets/QUIMAGROAPP/LOGOS/DEFENSANF.png',
+              detalles: [],
+              productTitle: 'Defensa NF',
+              description: 'Control selectivo de malezas difíciles.',
+              ventajas: 'Efectivo en pequeñas dosis.',
+              ingredienteActivo: 'AMINOPYRALID',
+              descargables: {
+                fichaTecnica:
+                  'assets/QUIMAGROAPP/FICHAS/Ficha Tecnica_Defensa NF.pdf',
+                folleto: 'assets/QUIMAGROAPP/FOLLETOS/Folleto_Defensa NF.pdf',
+                hojaSeguridad:
+                  'assets/QUIMAGROAPP/HOJA DE SEGURIDAD/Hoja de seguridad_Defensa NF.pdf ',
+              },
+            },
+            {
+              id: 'Harness',
+              title: 'Harness',
+              img: '../assets/QUIMAGROAPP/LOGOS/HARNESS.png',
+              detalles: [],
+              productTitle: 'Harness',
+              description: 'Control selectivo de malezas difíciles.',
+              ventajas: 'Efectivo en pequeñas dosis.',
+              presentations: [
+                '../assets/QUIMAGROAPP/PRODUCTOS/HARNESS Garrafa.png',
+              ],
+              ingredienteActivo: 'ACETOCLOR',
+              descargables: {
+                fichaTecnica:
+                  'assets/QUIMAGROAPP/FICHAS/Ficha tecnica_Harness.pdf',
+                folleto: 'assets/QUIMAGROAPP/FOLLETOS/Folleto_Harness.pdf',
+                hojaSeguridad:
+                  'assets/QUIMAGROAPP/HOJA DE SEGURIDAD/Hoja de seguridad_Harness.pdf ',
+              },
+            },
+            {
+              id: 'Harness Xtra',
+              title: 'Harness Xtra',
+              img: '../assets/QUIMAGROAPP/LOGOS/HARNESSX.png',
+              detalles: [],
+              productTitle: 'Harness Xtra',
+              description: 'Control selectivo de malezas difíciles.',
+              ventajas: 'Efectivo en pequeñas dosis.',
+              presentations: [
+                '../assets/QUIMAGROAPP/PRODUCTOS/HARNESS XTRA Garrafa.png',
+              ],
+              ingredienteActivo: 'ACETOCLOR ATRAZINA',
+              descargables: {
+                fichaTecnica:
+                  'assets/QUIMAGROAPP/FICHAS/Ficha tecnica_HarnessXtra.pdf',
+                hojaSeguridad:
+                  'assets/QUIMAGROAPP/HOJA DE SEGURIDAD/Hoja de seguridad_Harness Xtra.pdf ',
+              },
+            },
+            {
+              id: 'Laudis',
+              title: 'Laudis',
+              img: '../assets/QUIMAGROAPP/LOGOS/LAUDIS.png',
+              detalles: [],
+              productTitle: 'Laudis',
+              description: 'Control selectivo de malezas difíciles.',
+              ventajas: 'Efectivo en pequeñas dosis.',
+              ingredienteActivo: 'TEMBOTRINOE',
+              presentations: ['../assets/QUIMAGROAPP/PRODUCTOS/LAUDIS.png'],
+              descargables: {
+                fichaTecnica:
+                  'assets/QUIMAGROAPP/FICHAS/Ficha técnica_Laudis.pdf',
+                folleto: 'assets/QUIMAGROAPP/FOLLETOS/Folleto_Laudis.pdf',
+                hojaSeguridad:
+                  'assets/QUIMAGROAPP/HOJA DE SEGURIDAD/Hoja de seguridad_Laudis.pdf ',
+              },
+            },
+          ],
+        },
+        {
+          id: 'insecticidas',
+          title: 'Insecticidas',
+          img: '../assets/QUIMAGROAPP/bug-slash-solid.svg',
+          detalles: [
+            {
+              id: 'Clavis',
+              title: 'Clavis',
+              img: '../assets/QUIMAGROAPP/LOGOS/CLAVIS.png',
+              detalles: [],
+              productTitle: 'Clavis',
+              description: 'Control efectivo contra plagas comunes.',
+              ventajas: 'No afecta polinizadores.',
+              presentations: ['../assets/QUIMAGROAPP/PRODUCTOS/Clavis.png'],
+              ingredienteActivo: 'TIODICARB TRIFLUMURON',
+              descargables: {
+                fichaTecnica:
+                  'assets/QUIMAGROAPP/FICHAS/Ficha tecnica_Clavis.pdf',
+                folleto: 'assets/QUIMAGROAPP/FOLLETOS/Folleto_Clavis.pdf',
+                hojaSeguridad:
+                  'assets/QUIMAGROAPP/HOJA DE SEGURIDAD/Hoja de seguridad_Clavis.pdf ',
+              },
+            },
+            {
+              id: 'Decis Forte',
+              title: 'Decis Forte',
+              img: '../assets/QUIMAGROAPP/LOGOS/DECISF.png',
+              detalles: [],
+              productTitle: 'Decis Forte',
+              description: 'Control efectivo contra plagas comunes.',
+              ventajas: 'No afecta polinizadores.',
+              presentations: ['../assets/QUIMAGROAPP/PRODUCTOS/DecisForte.png'],
+              ingredienteActivo: 'DELTAMETRINA',
+              descargables: {
+                fichaTecnica:
+                  'assets/QUIMAGROAPP/FICHAS/Ficha tecnica_Decis Forte.pdf',
+                folleto: 'assets/QUIMAGROAPP/FOLLETOS/Folleto_Decis Forte.pdf',
+                hojaSeguridad:
+                  'https://example.com/hojas/seguridad_insecticidaX.pdf',
+              },
+            },
+            {
+              id: 'MURALLA MAX',
+              title: 'MURALLA M',
+              img: '../assets/QUIMAGROAPP/LOGOS/MURALLAM.png',
+              detalles: [],
+              productTitle: 'MURALLA MAX',
+              description: 'Control efectivo contra plagas comunes.',
+              ventajas: 'No afecta polinizadores.',
+              presentations: [
+                '../assets/QUIMAGROAPP/PRODUCTOS/Muralla Max.png',
+              ],
+              ingredienteActivo: 'IMIDACLOPRID BETACYFLUTRIN',
+              descargables: {
+                fichaTecnica:
+                  'assets/QUIMAGROAPP/FICHAS/Ficha tecnica_Muralla Max.pdf',
+                folleto: 'assets/QUIMAGROAPP/FOLLETOS/Folleto_Muralla Max.pdf',
+                hojaSeguridad:
+                  'assets/QUIMAGROAPP/HOJA DE SEGURIDAD/Hoja de seguridad_Muralla Max.pdf ',
+              },
+            },
+          ],
+        },
+        {
+          id: 'Foliares',
+          title: 'Foliares',
+          img: '../assets/QUIMAGROAPP/droplet-solid.svg',
+          detalles: [
+            {
+              id: 'BAYFOLAN F',
+              title: 'BAYFOLAN F',
+              img: '../assets/QUIMAGROAPP/LOGOS/BYFOLANF.png',
+              detalles: [],
+              productTitle: 'BAYFOLAN FORTE',
+              description: 'Control efectivo contra plagas comunes.',
+              ventajas: 'No afecta polinizadores.',
+              presentations: [
+                '../assets/QUIMAGROAPP/PRODUCTOS/BayfolanForte.png',
+              ],
+              ingredienteActivo: 'MICROELEMENTOS',
+              descargables: {
+                fichaTecnica:
+                  'assets/QUIMAGROAPP/FICHAS/Ficha tecnica_Bayfolan Forte.pdf',
+                hojaSeguridad:
+                  'https://example.com/hojas/seguridad_insecticidaX.pdf',
+              },
+            },
+          ],
+        },
       ],
-      FichaTecnica: '/assets/pdfs/FichaTecnica/FaenaClasico.pdf',
-      HojaSeguridad: '/assets/pdfs/HojaSeguridad/FaenaClasico.pdf',
     },
-  ];
-
-  row2Products = [
     {
-      section: 'Fungicida',
-      image:
-        'https://mazorca.mx/wp-content/uploads/2021/11/la-mazorca-bayer-CONSIST-MAX.jpg',
-      name: 'Consist Max',
-      description:
-        'Consist Max es un herbicida sistémico formulado para el control eficaz de malezas difíciles en cultivos agrícolas. Contiene glifosato en alta concentración y se aplica sobre el follaje de las plantas, desde donde se traslada a las raíces para eliminar completamente las malezas. ',
-      IngredientesActivos: 'Tebuconazole trifloxystrobin',
-      presentations: [
-        'https://mazorca.mx/wp-content/uploads/2021/11/la-mazorca-bayer-CONSIST-MAX.jpg',
+      nombre: 'Fertilizantes',
+      productos: [
+        {
+          id: 'fertilizante-a',
+          title: 'Fertilizante A',
+          img: '../assets/QUIMAGROAPP/flask-solid.svg',
+          detalles: [
+            {
+              id: 'fertilizante-a1',
+              title: 'Fertilizante',
+              img: '../assets/QUIMAGROAPP/PRODUCTOS/Saco_fertilizante.png',
+              detalles: [],
+              productTitle: 'Fertilizante',
+              description: 'Mejora la absorción de nutrientes.',
+              ventajas: 'Ideal para cultivos de alto rendimiento.',
+              ingredienteActivo: 'Nitrógeno, Fósforo',
+              descargables: {
+                fichaTecnica: 'https://example.com/fichas/fertilizanteA1.pdf',
+                hojaSeguridad:
+                  'https://example.com/hojas/seguridad_fertilizanteA1.pdf',
+              },
+            },
+          ],
+        },
+        {
+          id: 'fertilizante-b',
+          title: 'Fertilizante B',
+          img: '../assets/QUIMAGROAPP/flask-solid.svg',
+          detalles: [
+            {
+              id: 'fertilizante-b1',
+              title: 'Fertilizante',
+              img: '../assets/QUIMAGROAPP/PRODUCTOS/Saco-mezclas físicas.png',
+              detalles: [],
+              productTitle: 'Fertilizante',
+              description: 'Equilibra el pH del suelo.',
+              ventajas: 'Mejora la retención de agua.',
+              ingredienteActivo: 'Calcio',
+              descargables: {
+                fichaTecnica: 'https://example.com/fichas/fertilizanteB1.pdf',
+                hojaSeguridad:
+                  'https://example.com/hojas/seguridad_fertilizanteB1.pdf',
+              },
+            },
+          ],
+        },
       ],
-      FichaTecnica: '/assets/pdfs/FichaTecnica/ConsistMax.pdf',
-      HojaSeguridad: '/assets/pdfs/HojaSeguridad/ConsistMax.pdf',
     },
   ];
 
-  row3Products = [
-    {
-      section: 'Herbicida',
-      image:
-        'https://mazorca.mx/wp-content/uploads/2021/11/la-mazorca-bayer-DEFENSA.jpg',
-      name: 'Defensa',
-      description:
-        'Defensa es un herbicida sistémico no selectivo formulado para el control efectivo de malezas en diversos cultivos. Contiene glifosato como ingrediente activo, que se absorbe por el follaje y se traslada hasta las raíces, eliminando completamente las plantas indeseadas.4-D',
-      IngredientesActivos: 'picloram 2,4-d',
-      presentations: [
-        'https://mazorca.mx/wp-content/uploads/2021/11/la-mazorca-bayer-DEFENSA.jpg',
-        'https://http2.mlstatic.com/D_621922-MLM71594915652_092023-C.jpg',
-        'https://http2.mlstatic.com/D_NQ_NP_766981-MLM31909551601_082019-O-defensa-10l-herbicida-picloran-control-de-maleza-y-arbustos.webp',
-      ],
-      FichaTecnica: '/assets/pdfs/FichaTecnica/Defensa.pdf',
-      HojaSeguridad: '',
-    },
-    {
-      section: 'Herbicida',
-      image:
-        'https://mazorca.mx/wp-content/uploads/2021/11/la-mazorca-bayer-DEFENSA.jpg',
-      name: 'Defensa NF',
-      description:
-        'Defensa NF es un herbicida sistémico selectivo que combina picloram y 2,4-D para el control efectivo de malezas de hoja ancha, arbustivas y leñosas en pastizales y potreros, sin dañar los pastos establecidos. Se aplica de forma foliar y ayuda a mantener la calidad del pasto, mejorando la disponibilidad de forraje para el ganado.',
-      IngredientesActivos: 'aminopyralid 2,4-d',
-      presentations: [
-        'https://mazorca.mx/wp-content/uploads/2021/11/la-mazorca-bayer-DEFENSA.jpg',
-        'https://http2.mlstatic.com/D_621922-MLM71594915652_092023-C.jpg',
-        'https://http2.mlstatic.com/D_NQ_NP_766981-MLM31909551601_082019-O-defensa-10l-herbicida-picloran-control-de-maleza-y-arbustos.webp',
-      ],
-      FichaTecnica: '/assets/pdfs/FichaTecnica/DefensaNF.pdf',
-      HojaSeguridad: '/assets/pdfs/HojaSeguridad/DefensaNF.pdf',
-    },
-    {
-      section: 'Herbicida',
-      image:
-        'https://torke.com.mx/cdn/shop/files/Herbicida-Agricola-Harness-1-Litro.jpg?v=1689437720',
-      name: 'Harness',
-      description:
-        'Este producto actúa inhibiendo la germinación de las semillas de malezas al ser absorbido por las raíces en proceso de germinación. Es especialmente efectivo en suelos con humedad, ya que requiere de esta condición para activarse adecuadamente.f',
-      IngredientesActivos: 'acetoclor',
-      FichaTecnica: '/assets/pdfs/FichaTecnica/Harness.pdf',
-      HojaSeguridad: '/assets/pdfs/HojaSeguridad/Harness.pdf',
-    },
-    {
-      section: 'Herbicida',
-      image:
-        'https://mazorca.mx/wp-content/uploads/2021/11/la-mazorca-syngenta-HARNESS-XTRA.jpg',
-      name: 'Harness Xtra',
-      description:
-        'Harness® Xtra es un herbicida preemergente selectivo desarrollado por Bayer para el control de malezas en cultivos de maíz. Su formulación combina dos ingredientes activos: acetoclor (46.3%) y atrazina (18.4%), lo que le permite ofrecer un amplio espectro de control sobre malezas de hoja angosta y ancha, como zacate pitillo, zacate pinto, zacate salado, zacate cola de zorra, quelite, enredadera, gigantón, flor amarilla y hierba del pollo .',
-      IngredientesActivos: 'acetoclor atrazina',
-      FichaTecnica: '/assets/pdfs/FichaTecnica/HarnessXtra.pdf',
-      HojaSeguridad: '/assets/pdfs/HojaSeguridad/HarnessXtra.pdf',
-    },
-    {
-      section: 'Herbicida',
-      image:
-        'https://mazorca.mx/wp-content/uploads/2021/11/la-mazorca-bayer-LAUDIS.jpg',
-      name: 'Laudis',
-      description: 'Ingredientes Activos: TEMBOTRIONE',
-      IngredientesActivos: 'tembotrione',
-      FichaTecnica: '/assets/pdfs/FichaTecnica/Laudis.pdf',
-      HojaSeguridad: '/assets/pdfs/HojaSeguridad/Laudis.pdf',
-    },
-  ];
-
-  row4Products = [
-    {
-      section: 'Insecticida',
-      image:
-        'https://http2.mlstatic.com/D_NQ_NP_745110-MLM51137055120_082022-O-clavis-1-litro-control-de-gusano-cogollero-4-hectareas.webp',
-      name: 'Clavis',
-      description:
-        'Clavis® es un insecticida desarrollado por Bayer, diseñado específicamente para el control del gusano cogollero (Spodoptera frugiperda) en cultivos de maíz y sorgo. Su formulación combina dos ingredientes activos: tiodicarb (30%) y triflumurón (10%), que actúan de manera sinérgica para ofrecer un control eficaz de esta plaga.te Activo: TIODICARB + TRIFLUMURÓN',
-      IngredientesActivos: 'tiodicarb triflumuron',
-      FichaTecnica: '/assets/pdfs/FichaTecnica/Clavis.pdf',
-      HojaSeguridad: '/assets/pdfs/HojaSeguridad/Clavis.pdf',
-    },
-    {
-      section: 'Insecticida',
-      image:
-        'https://torke.com.mx/cdn/shop/files/Decis-Forte-Uso-Agricola-450-Ml-Deltametrina-Plaga-Gusano.jpg?v=1689275238',
-      name: 'Decis Forte',
-      description:
-        'Decis® Forte es un insecticida piretroide formulado con deltametrina al 10% (100 g/L), desarrollado por Bayer para el control efectivo de diversas plagas en cultivos agrícolas. Actúa por contacto e ingestión sobre el sistema nervioso de los insectos, mostrando alta eficacia a dosis bajas y un rápido efecto de volteo.',
-      IngredientesActivos: 'deltametrina',
-      FichaTecnica: '/assets/pdfs/FichaTecnica/DecisForte.pdf',
-      HojaSeguridad: '/assets/pdfs/HojaSeguridad/DecisForte.pdf',
-    },
-    {
-      section: 'Insecticida',
-      image: 'https://imaisa.com.mx/wp-content/uploads/2020/04/BAYAG-005.jpg',
-      name: 'Muralla Max',
-      description:
-        'Muralla Max® es un insecticida de Bayer formulado con imidacloprid (19.6%) y betacyfluthrin (8.4%), presentando una formulación OD (dispersión en aceite) que combina un neonicotinoide y un piretroide sintético. Esta combinación permite un control rápido y prolongado de diversas plagas en una amplia gama de cultivos',
-      IngredientesActivos: 'imidacloprid betacyflutrin',
-      FichaTecnica: '/assets/pdfs/FichaTecnica/MurallaMax.pdf',
-      HojaSeguridad: '/assets/pdfs/HojaSeguridad/MurallaMax.pdf',
-    },
-  ];
-
-  row5Products = [
-    {
-      section: 'Foliares',
-      image:
-        'https://www.comercialagropecuaria.mx/cdn/shop/products/Bayfolan_Forte.png?v=1565981358',
-      name: 'Bayfolan Forte',
-      description:
-        'Los fertilizantes foliares son soluciones líquidas aplicadas directamente sobre las hojas de las plantas para proporcionar nutrientes esenciales de forma rápida y eficiente. Esta técnica de nutrición complementa la fertilización convencional al suelo, permitiendo una absorción casi inmediata por parte de la planta .',
-      IngredientesActivos: 'n,p,k microelementos',
-      presentations: [
-        'https://www.comercialagropecuaria.mx/cdn/shop/products/Bayfolan_Forte.png?v=1565981358',
-        'https://http2.mlstatic.com/D_NQ_NP_702690-MLM51188112466_082022-O.webp',
-        'https://torke.com.mx/cdn/shop/files/bayfolan-forte-galon-4-litros-nutriente-foliar-para-plantas.jpg?v=1720544755',
-      ],
-      FichaTecnica: '/assets/pdfs/FichaTecnica/BayfolanForte.pdf',
-      HojaSeguridad: '/assets/pdfs/HojaSeguridad/BayfolanForte.pdf',
-    },
-  ];
-
-  row6Products = [
-    {
-      section: 'Semilla de Maíz',
-      image:
-        'https://static.orbia.ag/products/8a2a7337-6a92-4f00-aa5b-ac5af52872b8.png',
-      name: 'DK-4050',
-      description: '60,000 SEMILLAS',
-      FichaTecnica: '/assets/pdfs/FichaTecnica/DK-4050.pdf',
-    },
-    {
-      section: 'Semilla de Maíz',
-      image:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa0Q2grD56OBfouRaDHteIdZIA5XW668BkMw&s',
-      name: 'DK-5021',
-      description: '60,000 SEMILLAS',
-      FichaTecnica: '/assets/pdfs/FichaTecnica/DK-5021.pdf',
-    },
-    {
-      section: 'Semilla de Maíz',
-      image:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6bYNiHdXo7SM6xaa9BDmuw45dUekX-KwGmA&s',
-      name: 'DK-5024',
-      description: '60,000 SEMILLAS',
-      FichaTecnica: '/assets/pdfs/FichaTecnica/DK-4050.pdf',
-    },
-    {
-      section: 'Semilla de Maíz',
-      image: 'https://cosechometro.dekalb.mx/static/media/dk4055.f99017c2.png',
-      name: 'DK-4055',
-      description: '60,000 SEMILLAS',
-      FichaTecnica: '/assets/pdfs/FichaTecnica/DK-4055.pdf',
-    },
-    {
-      section: 'Semilla de Maíz',
-      image:
-        'https://blob.luznoticias.mx/images/2022/09/09/texto-dk2048slideweb-5737ed18.png',
-      name: 'DK-2048',
-      description: '60,000 SEMILLAS',
-      FichaTecnica: '/assets/pdfs/FichaTecnica/DK-2048.pdf',
-    },
-    {
-      section: 'Semilla de Maíz',
-      image:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjSbM4mcBPuuuBd_z-ZfmskjM_AgkOdt4wtQ&s',
-      name: 'DK-501SC',
-      description: '60,000 SEMILLAS',
-    },
-  ];
-
-  row7Products = [
-    {
-      section: 'Semilla de Sorgo',
-      image:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTrCF4QdRBVwwFFI-cSrH0-woTawcY-4aBMw&s',
-      name: 'DKS-40',
-      description: 'Cantidad: 20KG',
-      FichaTecnica: '/assets/pdfs/FichaTecnica/DKS-40.pdf',
-    },
-    {
-      section: 'Semilla de Sorgo',
-      image:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1kRfsReygpU_nXvxYehb6eKUrKolfV3sUFA&s',
-      name: 'DKS-2805',
-      description: 'Cantidad: 20KG',
-      FichaTecnica: '/assets/pdfs/FichaTecnica/DKS-2805.pdf',
-    },
-    {
-      section: 'Semilla de Sorgo',
-      image:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzYoLq_-JLSFoIxwGHPUNBSbllUg4ZAJhpyw&s',
-      name: 'DKS-3607',
-      description: 'Cantidad: 20KG',
-      FichaTecnica: '/assets/pdfs/FichaTecnica/DKS-3607.pdf',
-    },
-    {
-      section: 'Semilla de Sorgo',
-      image:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuqLHmaoq6oh45WQYEVovRTxn2N-Vw7IBWFg&s',
-      name: 'DKS-26',
-      description: 'Cantidad: 20KG',
-      FichaTecnica: '/assets/pdfs/FichaTecnica/DKS-26.pdf',
-    },
-    {
-      section: 'Semilla de Sorgo',
-      image:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ06PQyA-AgIPlqd8ugQq3fVEdK1VPq992Wrg&s',
-      name: 'DKS-820',
-      description: 'Cantidad: 20KG',
-      FichaTecnica: '/assets/pdfs/FichaTecnica/DKS-820.pdf',
-    },
-  ];
-
-  filteredRow1Products = [...this.row1Products];
-  filteredRow2Products = [...this.row2Products];
-  filteredRow3Products = [...this.row3Products];
-  filteredRow4Products = [...this.row4Products];
-  filteredRow5Products = [...this.row5Products];
-  filteredRow6Products = [...this.row6Products];
-  filteredRow7Products = [...this.row7Products];
-
-  searchQuery: string = '';
-
-  selectedProduct: any = null;
-  currentImage: string = '';
-  productoActual: any = null;
-
-  activeIndex: number = 0;
-  isClosing = false;
-
-  noProductsFound: boolean = false;
-
-  @ViewChild('scrollContainer', { read: ElementRef })
-  scrollContainer?: ElementRef;
+  categoriaSeleccionada: Categoria | null = null;
+  productoSeleccionado: Producto | null = null;
+  activeIndex: number | undefined;
+  imagenPresentacionActiva: string | null = null;
+  selectedProduct: any;
+  detalleSeleccionado: any = null; // El subproducto
+  producto: any;
 
   constructor(
-    private platform: Platform,
-    private http: HttpClient,
     private file: File,
-    private fileOpener: FileOpener
+    private fileOpener: FileOpener,
+    private http: HttpClient,
+    private platform: Platform
   ) {}
 
-  ngOnInit() {}
-
-  removeAccents(str: string): string {
-    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  ngOnInit(): void {
+    console.log('Producto:', this.producto);
   }
 
-  filterProducts() {
-    const normalizedQuery = this.removeAccents(
-      this.searchQuery.toLowerCase().trim()
-    );
-
-    if (!normalizedQuery) {
-      this.filteredRow1Products = [...this.row1Products];
-      this.filteredRow2Products = [...this.row2Products];
-      this.filteredRow3Products = [...this.row3Products];
-      this.filteredRow4Products = [...this.row4Products];
-      this.filteredRow5Products = [...this.row5Products];
-      this.filteredRow6Products = [...this.row6Products];
-      this.filteredRow7Products = [...this.row7Products];
-      this.noProductsFound = false;
-      return;
-    }
-
-    const filterRow = (rowProducts: any[]) => {
-      return rowProducts.filter(
-        (product) =>
-          this.removeAccents(product.name.toLowerCase()).includes(
-            normalizedQuery
-          ) ||
-          this.removeAccents(product.section?.toLowerCase() || '').includes(
-            normalizedQuery
-          ) ||
-          this.removeAccents(
-            product.IngredientesActivos?.toLowerCase() || ''
-          ).includes(normalizedQuery)
-      );
-    };
-
-    this.filteredRow1Products = filterRow(this.row1Products);
-    this.filteredRow2Products = filterRow(this.row2Products);
-    this.filteredRow3Products = filterRow(this.row3Products);
-    this.filteredRow4Products = filterRow(this.row4Products);
-    this.filteredRow5Products = filterRow(this.row5Products);
-
-    const filterRowNoIngred = (rowProducts: any[]) => {
-      return rowProducts.filter(
-        (product) =>
-          this.removeAccents(product.name.toLowerCase()).includes(
-            normalizedQuery
-          ) ||
-          this.removeAccents(product.section?.toLowerCase() || '').includes(
-            normalizedQuery
-          )
-      );
-    };
-
-    this.filteredRow6Products = filterRowNoIngred(this.row6Products);
-    this.filteredRow7Products = filterRowNoIngred(this.row7Products);
-
-    // Actualizar flag para mostrar mensaje de "no resultados"
-    this.noProductsFound =
-      this.filteredRow1Products.length === 0 &&
-      this.filteredRow2Products.length === 0 &&
-      this.filteredRow3Products.length === 0 &&
-      this.filteredRow4Products.length === 0 &&
-      this.filteredRow5Products.length === 0 &&
-      this.filteredRow6Products.length === 0 &&
-      this.filteredRow7Products.length === 0;
+  selectTab(tab: 'productos' | 'buscar' | 'categorias') {
+    this.selectedTab = tab;
+    this.categoriaSeleccionada = null;
+    this.productoSeleccionado = null;
   }
 
-  selectProduct(product: any) {
-    if (product) {
-      this.selectedProduct = product;
-      this.productoActual = product;
-      this.resetPresentations();
-    }
+  seleccionarCategoria(categoria: Categoria) {
+    this.categoriaSeleccionada = categoria;
+    this.productoSeleccionado = null;
   }
 
-  resetPresentations() {
-    if (this.selectedProduct?.presentations?.length > 0) {
-      this.activeIndex = 0;
-      this.currentImage = this.selectedProduct.presentations[0];
-    } else {
-      this.activeIndex = -1;
-      this.currentImage = this.selectedProduct?.image || '';
-    }
+  volverAtrasCategoria() {
+    this.categoriaSeleccionada = null;
+    this.productoSeleccionado = null;
+  }
+
+  volverAtrasProducto() {
+    this.productoSeleccionado = null;
+  }
+
+  seleccionarProducto(producto: any) {
+    this.productoSeleccionado = producto;
+    this.subproductoSeleccionado = null;
+    this.detalleSeleccionado = null;
+  }
+
+  subproductoSeleccionado: any = null;
+
+  seleccionarSubproducto(subproducto: any) {
+    this.subproductoSeleccionado = subproducto;
+    this.detalleSeleccionado = subproducto;
+    this.imagenPresentacionActiva = subproducto.img;
+    this.activeIndex = 0;
+  }
+
+  abrirProductoDesdeCategoria(producto: any) {
+    this.productoSeleccionado = producto;
+    this.subproductoSeleccionado = null;
+    this.detalleSeleccionado = null;
+  }
+
+  abrirProductoDesdeBusqueda(subproducto: any) {
+    this.subproductoSeleccionado = subproducto;
+    this.detalleSeleccionado = subproducto;
+    this.imagenPresentacionActiva = subproducto.img;
+    this.activeIndex = 0;
+  }
+
+  volverAtrasSubproducto() {
+    this.subproductoSeleccionado = null;
+    this.imagenPresentacionActiva = null;
   }
 
   changeImage(index: number): void {
-    if (!this.selectedProduct?.presentations) return;
-    if (index < 0 || index >= this.selectedProduct.presentations.length) return;
-
     this.activeIndex = index;
-    this.currentImage = this.selectedProduct.presentations[index];
+    const selectedImage = this.subproductoSeleccionado?.presentations?.[index];
+    if (selectedImage) {
+      this.imagenPresentacionActiva =
+        typeof selectedImage === 'string' ? selectedImage : selectedImage.image;
+    }
   }
 
-  closeProduct() {
-    this.isClosing = true;
-    setTimeout(() => {
-      this.selectedProduct = null;
-      this.productoActual = null;
-      this.activeIndex = -1;
-      this.currentImage = '';
-      this.isClosing = false;
-    }, 300);
+  abrirWhatsApp() {
+    const numero = '6682531211'; // O usa this.sucursalActiva.telefono
+    const mensaje = 'Hola, me gustaría más información';
+    const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+
+    window.open(url, '_blank');
   }
 
-  openFileByType(tipo: 'fichaTecnica' | 'hojaSeguridad') {
-    if (!this.productoActual) {
-      console.error('No hay producto seleccionado');
+  openFileByType(tipo: 'fichaTecnica' | 'hojaSeguridad' | 'folleto') {
+    if (!this.detalleSeleccionado) {
+      console.error('No hay detalle (subproducto) seleccionado');
+      return;
+    }
+
+    const descargables = this.detalleSeleccionado.descargables;
+    if (!descargables) {
+      console.error('No hay documentos descargables para este detalle');
       return;
     }
 
@@ -423,18 +651,18 @@ export class Tab1Page implements OnInit {
 
     switch (tipo) {
       case 'fichaTecnica':
-        url = this.productoActual.FichaTecnica;
+        url = descargables.fichaTecnica;
         break;
       case 'hojaSeguridad':
-        url = this.productoActual.HojaSeguridad;
+        url = descargables.hojaSeguridad;
         break;
-      default:
-        console.error('Tipo de archivo no reconocido');
-        return;
+      case 'folleto':
+        url = descargables.folleto;
+        break;
     }
 
     if (!url) {
-      console.error('URL no definida para', tipo);
+      console.error(`No se encontró URL para tipo ${tipo}`);
       return;
     }
 
@@ -455,14 +683,12 @@ export class Tab1Page implements OnInit {
               this.fileOpener
                 .open(fileEntry.nativeURL, 'application/pdf')
                 .then(() => console.log('Archivo abierto'))
-                .catch((err) =>
-                  console.error('Error al abrir el archivo', err)
-                );
+                .catch((err) => console.error('Error al abrir archivo', err));
             })
-            .catch((err) => console.error('Error al escribir el archivo', err));
+            .catch((err) => console.error('Error al escribir archivo', err));
         },
         (err) => {
-          console.error('Error al descargar el archivo', err);
+          console.error('Error al descargar archivo', err);
         }
       );
     } else {
@@ -470,17 +696,35 @@ export class Tab1Page implements OnInit {
     }
   }
 
-  ionViewWillEnter() {
-    if (this.scrollContainer?.nativeElement) {
-      this.scrollContainer.nativeElement.scrollTop = 0;
+  searchTerm: string = '';
+  productosFiltrados: any[] = [];
+
+  filtrarProductos(event: any) {
+    this.searchTerm = event.target.value?.toLowerCase() || '';
+    this.productosFiltrados = [];
+
+    this.productoSeleccionado = null;
+    this.subproductoSeleccionado = null;
+    this.detalleSeleccionado = null;
+
+    if (!this.searchTerm) {
+      return;
     }
-  }
 
-  abrirWhatsApp() {
-    const numero = '6682531211'; // O usa this.sucursalActiva.telefono
-    const mensaje = 'Hola, me gustaría más información';
-    const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+    for (const categoria of this.categorias) {
+      for (const producto of categoria.productos) {
+        for (const detalle of producto.detalles) {
+          const titulo = detalle.title?.toLowerCase() || '';
+          const ingrediente = detalle.ingredienteActivo?.toLowerCase() || '';
 
-    window.open(url, '_blank');
+          if (
+            titulo.includes(this.searchTerm) ||
+            ingrediente.includes(this.searchTerm)
+          ) {
+            this.productosFiltrados.push(detalle);
+          }
+        }
+      }
+    }
   }
 }
