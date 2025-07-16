@@ -1,5 +1,5 @@
 .principalMain {
-  overflow: hidden;
+  overflow-y: hidden;
 }
 
 .container {
@@ -59,7 +59,7 @@
     }
   }
 
-  ion-content {
+  .ion-contentDiv {
     --background: transparent !important;
     --padding: 0 10px !important;
     height: 60% !important;
@@ -141,14 +141,15 @@
             }
           }
         }
-
-        .semillas {
-          .category {
-            .category-img {
-            }
-          }
-        }
       }
+    }
+
+    .about {
+      width: 100%;
+      height: 90%;
+      padding: 0 7px;
+      max-width: 470px;
+      margin: 0 auto;
     }
   }
 }
@@ -160,6 +161,7 @@
   justify-content: flex-start;
   align-items: flex-start;
   margin: 16px 0;
+  padding-bottom: 80px;
 
   // Truco visual para centrar si hay más de 2
   &::after {
@@ -245,6 +247,7 @@
         align-items: center;
         justify-content: center;
         padding: 10px 5px;
+        background-color: #20212400;
 
         border-radius: 8px;
 
@@ -278,8 +281,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: 100vh;
-  width: 100vw;
+  height: 95dvh;
+  width: 100dvw;
   z-index: 100000;
   background-image: linear-gradient(
     to bottom,
@@ -315,27 +318,28 @@
     }
   }
   .detalle-content {
-    height: 85%;
+    height: 90%;
     .detalle-content-top {
       background-color: var(--white);
       box-shadow: 1px 5px 9px 0px rgba(0, 0, 0, 0.75);
       -webkit-box-shadow: 1px 5px 9px 0px rgba(0, 0, 0, 0.75);
       -moz-box-shadow: 1px 5px 9px 0px rgba(0, 0, 0, 0.75);
       width: 100%;
-      height: 35%;
+      height: 30%;
+      min-height: 30%;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 10px;
       img {
         width: 60%;
-        max-width: 100%;
+        max-width: 170px;
       }
     }
     .detalle-content-info {
       width: 100%;
       height: 30%;
-
+      min-height: 30%;
       .productTitle {
         color: var(--light-red);
         font-weight: bold;
@@ -359,9 +363,9 @@
     }
     .detalle-content-bottom {
       width: 100%;
-      height: 35%;
+      height: 40%;
+      min-height: 40%;
       padding-top: 5px;
-
       .presentaciones {
         display: flex;
         flex-direction: column;
@@ -499,12 +503,15 @@ ion-content::part(scroll) {
   padding: 0 !important;
 }
 
-@media screen and (max-height: 6px) {
-  .container[_ngcontent-ng-c205501183]
-    .container__top[_ngcontent-ng-c205501183] {
+@media screen and (max-height: 666px) {
+  .container__top {
     display: none;
   }
-  .container[_ngcontent-ng-c205501183] ion-content[_ngcontent-ng-c205501183] {
-    height: 85% !important;
+  .container[_ngcontent-ng-c249963677]
+    .ion-contentDiv[_ngcontent-ng-c249963677] {
+    --background: transparent !important;
+    --padding: 0 10px !important;
+    height: auto !important;
+    overflow-y: auto;
   }
 }

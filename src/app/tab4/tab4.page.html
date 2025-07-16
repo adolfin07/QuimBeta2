@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Administrar Productos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item-divider color="light">Selecciona un producto para editar:</ion-item-divider>
+
+    <ng-container *ngFor="let cat of categorias">
+      <ion-item lines="none">
+        <ion-label color="medium"><strong>{{ cat.nombre }}</strong></ion-label>
+      </ion-item>
+
+      <ng-container *ngFor="let prod of cat.productos">
+        <ion-item lines="inset">
+          <ion-label class="ion-padding-start">
+            <strong>{{ prod.title }}</strong>
+          </ion-label>
+        </ion-item>
+
+        <ion-item
+          *ngFor="let detalle of prod.detalles"
+          button
+          (click)="seleccionarDetalle(cat.nombre, prod.id, detalle)"
+        >
+          <ion-label>
+            {{ detalle.title }}
+          </ion-label>
+        </ion-item>
+      </ng-container>
+    </ng-container>
+  </ion-list>
+
+  <form
+    *ngIf="detalleSeleccionado"
+    [formGroup]="formEditar"
+    (ngSubmit)="guardarCambios()"
+    class="ion-margin-top"
+  >
+    <ion-item>
+      <ion-label position="floating">ID</ion-label>
+      <ion-input formControlName="id"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Título</ion-label>
+      <ion-input formControlName="title"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Imagen</ion-label>
+      <ion-input formControlName="img"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Descripción</ion-label>
+      <ion-textarea formControlName="description"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Ventajas</ion-label>
+      <ion-textarea formControlName="ventajas"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Ingrediente Activo</ion-label>
+      <ion-input formControlName="ingredienteActivo"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Presentaciones (separadas por coma)</ion-label>
+      <ion-textarea formControlName="presentations"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Hoja Seguridad</ion-label>
+      <ion-input formControlName="hojaSeguridad"></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" [disabled]="formEditar.invalid">
+      Guardar Cambios
+    </ion-button>
+  </form>
+
+  <button class="adminLogout" (click)="toUserForm()">User Login</button>
+</ion-content>

@@ -18,6 +18,10 @@ export class FormComponent {
     this.router.navigate(['/sign-up']);
   }
 
+  toAdmin() {
+    this.router.navigate(['/adminLogin']);
+  }
+
   onKeyUp(event: KeyboardEvent) {
     if (event.key === 'Enter') {
       this.login();

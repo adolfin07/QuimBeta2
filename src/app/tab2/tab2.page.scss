@@ -1,3 +1,7 @@
+.principalMain {
+  overflow: hidden;
+}
+
 .container {
   position: relative;
   width: 100%;
@@ -48,7 +52,7 @@
         font-weight: bold;
         a {
           text-decoration: none;
-          color: var(--white );
+          color: var(--white);
           font-size: 14px;
         }
       }

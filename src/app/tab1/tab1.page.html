@@ -1,7 +1,6 @@
 <ion-content
   class="principalMain"
   [fullscreen]="true"
-  scrollY="hidde"
   [scrollAssist]="false"
   [keyboardResizes]="false"
 >
@@ -38,7 +37,7 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content>
+    <div class="ion-contentDiv">
       <!--productos page-->
       <div class="products" *ngIf="selectedTab === 'productos'">
         <ion-searchbar
@@ -198,7 +197,7 @@
                     Ver Ficha Técnica
                   </button>
                 </div>
-                  <div>
+                <div>
                   <button
                     *ngIf="detalleSeleccionado.descargables.folleto"
                     (click)="openFileByType('folleto')"
@@ -239,6 +238,6 @@
           (click)="abrirWhatsApp()"
         ></i>
       </div>
-    </ion-content>
+    </div>
   </div>
 </ion-content>

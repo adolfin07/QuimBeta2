@@ -4,8 +4,8 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: var(--light-red);
-  color: white;
+  background-color: white; /* Cambiado a blanco para evitar pantalla roja */
+  color: black; /* mejor contraste con fondo blanco */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -20,24 +20,25 @@
   .imgLoader {
     width: 50%;
     max-width: 150px;
-    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.712));
+    filter: drop-shadow(2px 2px 2px rgba(252, 3, 3, 0.2));
   }
 
   .loader {
     display: block;
     --height-of-loader: 4px;
-    --loader-color: var(--white);
+    --loader-color: black;
     width: 130px;
     height: var(--height-of-loader);
     border-radius: 30px;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.1);
     position: relative;
+    margin-top: 15px;
   }
 
   .loader::before {
     content: "";
     position: absolute;
-    background: var(--loader-color);
+    background: var(--light-red);
     top: 0;
     left: 0;
     width: 0%;

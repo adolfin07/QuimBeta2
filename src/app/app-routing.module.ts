@@ -15,6 +15,13 @@ const routes: Routes = [
       import('./login/login.module').then((m) => m.LoginPageModule),
   },
   {
+    path: 'adminLogin',
+    loadChildren: () =>
+      import('./adminLogin/adminLogin.module').then(
+        (m) => m.adminLoginPageModule
+      ),
+  },
+  {
     path: 'tabs',
     loadChildren: () =>
       import('./tabs/tabs.module').then((m) => m.TabsPageModule),
@@ -28,6 +35,11 @@ const routes: Routes = [
     path: 'tab1',
     loadChildren: () =>
       import('./tab1/tab1.module').then((m) => m.Tab1PageModule),
+  },
+  {
+    path: 'tab4',
+    loadChildren: () =>
+      import('./tab4/tab4.module').then((m) => m.Tab4PageModule),
   },
 ];
 
