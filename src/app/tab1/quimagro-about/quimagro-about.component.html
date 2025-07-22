@@ -2,3 +2,53 @@
   placeholder="Buscar producto..."
   (ionInput)="quimagroBuscador($event)"
 ></ion-searchbar>
+
+<div class="quimagro__container">
+  <div class="quimagro__container-title">
+    <h2>
+      Trending <br />
+      de la semana
+    </h2>
+  </div>
+  <div class="quimagro__container-content">
+    <div class="content__top">
+      <div class="content__top-1">
+        <div *ngFor="let card of cards" class="top-1__card">
+          <div class="img__container">
+            <img [src]="card.imgSrc" alt="" />
+            <span class="product__name">{{ card.productName }}</span>
+          </div>
+          <span class="location">📍 {{ card.location }}</span>
+        </div>
+      </div>
+      <div class="content__top-2">
+        <button>Siembra</button>
+        <button>Verde</button>
+        <button>Cosecha</button>
+      </div>
+      <div class="content__top-3">
+        <div *ngFor="let card of cards" class="top-1__card">
+          <div class="img__container">
+            <img [src]="card.imgSrc" alt="" />
+            <span class="product__name">{{ card.productName }}</span>
+          </div>
+          <span class="location">📍 {{ card.location }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="content__bottom">
+      <p class="content__bottom-title">Galeria</p>
+      <div class="content__bottom-scroll">
+        <div
+          *ngFor="let item of featuredImages"
+          class="content__bottom-imgContent"
+        >
+          <div class="imgContent__img-container">
+            <img [src]="item.img" alt="" />
+          </div>
+          <p class="location">📍 {{ item.location }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

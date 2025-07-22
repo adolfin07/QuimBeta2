@@ -14,6 +14,11 @@ const config: CapacitorConfig = {
       style: 'dark',
       resizeOnFullScreen: true,
     },
+    SplashScreen: {
+      launchShowDuration: 0,
+      autoHide: true,
+      showSplashScreen: false,
+    },
   },
 };
 

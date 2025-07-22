@@ -1,0 +1,138 @@
+.quimagro__container {
+  padding-bottom: 3%;
+  .quimagro__container-title {
+    h2 {
+      color: var(--light-red);
+      font-weight: bold;
+      margin: 0;
+    }
+  }
+  .quimagro__container-content {
+    padding-bottom: 3%;
+
+    .content__top {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      .content__top-1,
+      .content__top-3 {
+        display: flex;
+        scroll-snap-type: x mandatory;
+        overflow-x: auto;
+        gap: 10px;
+
+        /* Ocultar scrollbar en Chrome, Safari y Edge */
+        &::-webkit-scrollbar {
+          display: none;
+        }
+
+        /* Ocultar scrollbar en Firefox */
+        scrollbar-width: none;
+
+        /* Para un scroll suave en iOS */
+        -webkit-overflow-scrolling: touch;
+
+        .top-1__card {
+          flex: 0 0 auto; // que no se encoja ni crezca
+          width: calc(
+            (100% - 10px) / 2
+          ); // ancho para mostrar 2 tarjetas en el contenedor
+          scroll-snap-align: start; // para que el scroll se "pegue" aquí
+
+          padding: 2%;
+          height: 130px;
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+
+          .img__container {
+            position: relative;
+            height: 85%;
+            img {
+              position: absolute;
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              border-radius: 5px;
+            }
+            .product__name {
+              position: absolute;
+              background-color: rgb(204, 204, 1);
+              color: black;
+              font-size: 10px;
+              padding: 4px 7px;
+              font-weight: bold;
+              bottom: 0;
+              left: 0;
+              border-radius: 5px;
+            }
+          }
+          .location {
+            font-size: 13px;
+          }
+        }
+      }
+
+      .content__top-2 {
+        display: flex;
+        gap: 10px;
+        button {
+          background-color: var(--light-green);
+          padding: 4px 8px;
+          border-radius: 10px;
+          font-size: 12px;
+          width: 85px;
+        }
+      }
+    }
+
+    .content__bottom {
+      .content__bottom-title {
+        font-size: 25px;
+        color: var(--light-red);
+        font-weight: bold;
+      }
+
+      .content__bottom-scroll {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 15px;
+        padding: 0 0 10px 10px;
+        scroll-padding-left: 10px;
+        -webkit-overflow-scrolling: touch;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+
+        .content__bottom-imgContent {
+          flex: 0 0 85%; // muestra una por vista, pero deja ver parte de la siguiente
+          scroll-snap-align: start;
+          background: #fff;
+          border-radius: 10px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          overflow: hidden;
+
+          .imgContent__img-container {
+            width: 100%;
+            height: 150px;
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              display: block;
+            }
+          }
+
+          .location {
+            padding: 10px;
+            font-size: 14px;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}

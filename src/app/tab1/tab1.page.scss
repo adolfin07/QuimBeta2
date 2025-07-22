@@ -150,6 +150,7 @@
       padding: 0 7px;
       max-width: 470px;
       margin: 0 auto;
+      overflow: scroll;
     }
   }
 }
@@ -163,7 +164,6 @@
   margin: 16px 0;
   padding-bottom: 80px;
 
-  // Truco visual para centrar si hay más de 2
   &::after {
     content: "";
     flex: auto;
@@ -171,7 +171,7 @@
 }
 
 .category {
-  flex: 0 0 calc(31%); // más pequeño que 33%
+  flex: 0 0 calc(31%);
   box-sizing: border-box;
   text-align: center;
   background: #f9f9f9;
