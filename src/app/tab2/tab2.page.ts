@@ -28,7 +28,7 @@ export class Tab2Page {
       telefono: '668-812-2426',
       lat: 25.814926573657242,
       lng: -108.97690280505894,
-      imagen: '/assets/QUIMAGROAPP/SUCURSALES/mochis.png',
+      imagen: '/assets/QUIMAGROAPP/SUCURSALES/Mochis.jpg',
     },
     {
       id: 2,
@@ -38,7 +38,7 @@ export class Tab2Page {
       telefono: '668-865-0580',
       lat: 26.267659701607514,
       lng: -109.03788792163806,
-      imagen: '/assets/QUIMAGROAPP/SUCURSALES/carrizo.png',
+      imagen: '/assets/QUIMAGROAPP/SUCURSALES/Carrizo.JPG',
     },
     {
       id: 3,
@@ -48,7 +48,7 @@ export class Tab2Page {
       telefono: '687-872-2384',
       lat: 25.576987506775012,
       lng: -108.4634140217565,
-      imagen: '/assets/QUIMAGROAPP/SUCURSALES/guasave.png',
+      imagen: '/assets/QUIMAGROAPP/SUCURSALES/Guasave.jpg',
     },
     {
       id: 4,
@@ -58,7 +58,7 @@ export class Tab2Page {
       telefono: '687-896-1235',
       lat: 25.75959186535215,
       lng: -108.81329643229603,
-      imagen: '/assets/QUIMAGROAPP/SUCURSALES/juanjoserios.png',
+      imagen: '/assets/QUIMAGROAPP/SUCURSALES/JJR.jpg',
     },
     {
       id: 5,
@@ -68,7 +68,7 @@ export class Tab2Page {
       telefono: '673-732-1313',
       lat: 25.460159090650347,
       lng: -108.07740647463261,
-      imagen: '/assets/QUIMAGROAPP/SUCURSALES/Guamuchil.png',
+      imagen: '/assets/QUIMAGROAPP/SUCURSALES/Guamuchil.jpg',
     },
   ];
 

@@ -18,7 +18,7 @@ const routes: Routes = [
     path: 'adminLogin',
     loadChildren: () =>
       import('./adminLogin/adminLogin.module').then(
-        (m) => m.adminLoginPageModule
+        (m) => m.AdminLoginPageModule
       ),
   },
   {

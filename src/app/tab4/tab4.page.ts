@@ -4,6 +4,7 @@ import {
   ProductosService,
   Categoria,
   ProductoDetalle,
+  Card,
 } from '../services/productos.service';
 import { Router } from '@angular/router';
 
@@ -14,15 +15,13 @@ import { Router } from '@angular/router';
   standalone: false,
 })
 export class Tab4Page implements OnInit {
-  toUserForm() {
-    this.router.navigate(['/login']);
-  }
-
   categorias: Categoria[] = [];
   detalleSeleccionado: ProductoDetalle | null = null;
   categoriaSeleccionada: string = '';
   productoSeleccionadoId: string = '';
   formEditar: FormGroup;
+
+  cards: Card[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -42,9 +41,52 @@ export class Tab4Page implements OnInit {
   }
 
   ngOnInit() {
+    // Suscripción a categorías
     this.productosService.categorias$.subscribe((categorias) => {
       this.categorias = categorias;
+
+      if (
+        this.categoriaSeleccionada &&
+        this.productoSeleccionadoId &&
+        this.detalleSeleccionado
+      ) {
+        const categoria = categorias.find(
+          (c) => c.nombre === this.categoriaSeleccionada
+        );
+        const producto = categoria?.productos.find(
+          (p) => p.id === this.productoSeleccionadoId
+        );
+        const detalle = producto?.detalles.find(
+          (d) => d.id === this.detalleSeleccionado!.id
+        );
+
+        if (detalle) {
+          this.detalleSeleccionado = detalle;
+          this.formEditar.patchValue({
+            id: detalle.id,
+            title: detalle.title,
+            img: detalle.img,
+            description: detalle.description,
+            ventajas: detalle.ventajas,
+            ingredienteActivo: detalle.ingredienteActivo,
+            presentations: detalle.presentations
+              ? detalle.presentations.join(', ')
+              : '',
+            hojaSeguridad: detalle.descargables?.hojaSeguridad || '',
+          });
+        }
+      }
     });
+
+    // 🔁 Suscripción independiente a cards
+    this.productosService.cards$.subscribe((cards) => {
+      console.log('Cards actualizados en el componente:', cards);
+      this.cards = cards;
+    });
+  }
+
+  toUserForm() {
+    this.router.navigate(['/login']);
   }
 
   seleccionarDetalle(
@@ -56,7 +98,6 @@ export class Tab4Page implements OnInit {
     this.productoSeleccionadoId = idProducto;
     this.detalleSeleccionado = detalle;
 
-    // Mapear datos al formulario (presentations y hojaSeguridad como string)
     this.formEditar.patchValue({
       id: detalle.id,
       title: detalle.title,
@@ -84,7 +125,6 @@ export class Tab4Page implements OnInit {
 
     const formValue = this.formEditar.value;
 
-    // Crear objeto actualizado
     const detalleEditado: ProductoDetalle = {
       ...this.detalleSeleccionado,
       id: formValue.id,
@@ -109,6 +149,28 @@ export class Tab4Page implements OnInit {
       detalleEditado
     );
 
+    // Actualizar localmente para reflejar en UI
+    this.detalleSeleccionado = detalleEditado;
+
+    this.formEditar.patchValue({
+      id: detalleEditado.id,
+      title: detalleEditado.title,
+      img: detalleEditado.img,
+      description: detalleEditado.description,
+      ventajas: detalleEditado.ventajas,
+      ingredienteActivo: detalleEditado.ingredienteActivo,
+      presentations: detalleEditado.presentations
+        ? detalleEditado.presentations.join(', ')
+        : '',
+      hojaSeguridad: detalleEditado.descargables?.hojaSeguridad || '',
+    });
+
     alert('Cambios guardados correctamente');
+  }
+
+  saveCard(index: number) {
+    console.log('Guardando card', this.cards[index]);
+    this.productosService.updateCard(index, this.cards[index]);
+    alert('Card guardada correctamente');
   }
 }

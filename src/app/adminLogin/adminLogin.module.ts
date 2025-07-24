@@ -21,4 +21,4 @@ import { FormComponent } from './form/form.component';
   ],
   declarations: [adminLoginPage],
 })
-export class adminLoginPageModule {}
+export class AdminLoginPageModule {}

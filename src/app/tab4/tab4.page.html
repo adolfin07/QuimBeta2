@@ -6,7 +6,9 @@
 
 <ion-content class="ion-padding">
   <ion-list>
-    <ion-item-divider color="light">Selecciona un producto para editar:</ion-item-divider>
+    <ion-item-divider color="light"
+      >Selecciona un producto para editar:</ion-item-divider
+    >
 
     <ng-container *ngFor="let cat of categorias">
       <ion-item lines="none">
@@ -25,9 +27,7 @@
           button
           (click)="seleccionarDetalle(cat.nombre, prod.id, detalle)"
         >
-          <ion-label>
-            {{ detalle.title }}
-          </ion-label>
+          <ion-label> {{ detalle.title }} </ion-label>
         </ion-item>
       </ng-container>
     </ng-container>
@@ -70,7 +70,9 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Presentaciones (separadas por coma)</ion-label>
+      <ion-label position="floating"
+        >Presentaciones (separadas por coma)</ion-label
+      >
       <ion-textarea formControlName="presentations"></ion-textarea>
     </ion-item>
 
@@ -85,4 +87,39 @@
   </form>
 
   <button class="adminLogout" (click)="toUserForm()">User Login</button>
+</ion-content>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item *ngFor="let card of cards; let i = index">
+      <ion-thumbnail slot="start">
+        <img [src]="card.imgSrc" />
+      </ion-thumbnail>
+
+      <ion-item lines="none">
+        <ion-input
+          [(ngModel)]="cards[i].productName"
+          placeholder="Nombre"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-input
+          [(ngModel)]="cards[i].location"
+          placeholder="Ubicación"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-input
+          [(ngModel)]="cards[i].imgSrc"
+          placeholder="URL imagen"
+        ></ion-input>
+      </ion-item>
+
+      <ion-button slot="end" (click)="saveCard(i)" color="primary" size="small">
+        Guardar
+      </ion-button>
+    </ion-item>
+  </ion-list>
 </ion-content>
